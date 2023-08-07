@@ -5,10 +5,13 @@ public class DAOException extends Exception {
 	public DAOException(String msg) {
 		super(msg);
 	}
-	public DAOException(Throwable ex) {
-		super(ex);
+
+	public DAOException(Throwable e) {
+		super(e);
 	}
-	public DAOException(String msg, Throwable ex) {
-		super(msg, ex);
+
+	public DAOException(String msg, Throwable e) {
+		super(msg, e);
 	}
+
 }

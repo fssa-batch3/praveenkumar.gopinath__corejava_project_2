@@ -1,6 +1,5 @@
 package savinglives.service;
 
-import java.sql.SQLException;
 import savinglives.dao.UserDAO;
 import savinglives.dao.exception.DAOException;
 import savinglives.model.User;
@@ -9,62 +8,55 @@ import savinglives.validation.UserValidator;
 import savinglives.validation.exceptions.InvalidUserException;
 
 public class UserService {
-    /**
-     * Registers a new user.
-     *
-     * @param user The user object to be registered.
-     * @return true if the registration is successful, false otherwise.
-     * @throws ServiceException If there's a problem with the service.
-     */
-    public boolean registerUser(User user) throws ServiceException {
-        UserDAO userDAO = new UserDAO();
 
-        try {
-            UserValidator.validateUser(user);
-            if (userDAO.createUser(user)) {
-                System.out.println(user.getUsername() + " successfully registered!");
-                return true;
-            } else {
-                System.out.println("Registration not successful!");
-                return false;
-            }
+	public boolean registerUser(User user) throws ServiceException {
+		UserDAO userDAO = new UserDAO();
 
-        } catch (DAOException | InvalidUserException e) {
-            throw new ServiceException(e);
-        }
-    }
+		try {
+			UserValidator.validateUser(user);
+			if (userDAO.isEmailAlreadyRegistered(user.getEmail())) {
+				throw new DAOException("Email already exists");
+			}
+			if (userDAO.register(user)) {
+				System.out.println(user.getUsername() + "  Succesfully registered");
+				return true;
+			} else {
+				System.out.println("Registration failed");
+				return false;
+			}
 
-    /**
-     * Logs in a user using email and password credentials.
-     *
-     * @param email    The user's email address.
-     * @param password The user's password.
-     * @return true if the login is successful, false otherwise.
-     * @throws ServiceException If there's a problem with the service.
-     * @throws DAOException      If there's a problem with the data access.
-     * @throws SQLException     If there's a problem with the database.
-     */
-    public boolean loginUser(String email, String password) throws ServiceException, DAOException, SQLException {
-        UserDAO userDAO = new UserDAO();
-        User loginUser = userDAO.login(email, password);
+		} catch (DAOException | InvalidUserException e) {
 
-        if (email == null || password == null) {
-            throw new ServiceException("Invalid User Credentials");
-        }
+			throw new ServiceException(e.getMessage());
+		}
 
-        if (!UserValidator.validateEmail(email)) {
-            throw new ServiceException("Invalid Email");
-        }
+	}
 
-        if (!UserValidator.validatePassword(password)) {
-            throw new ServiceException("Invalid Password");
-        }
+	public boolean loginUser(User user) throws ServiceException {
 
-        if (loginUser != null) {
-            System.out.println(loginUser.getUsername() + " Login Successfully !");
-            return true;
-        } else {
-            return false;
-        }
-    }
+		try {
+			UserValidator.validateEmail(user.getEmail());
+			UserValidator.validatePassword(user.getPassword());
+
+			UserDAO userDAO = new UserDAO();
+			if (userDAO.login(user)) {
+				System.out.println(user.getEmail() + " Successfully logged in");
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			throw new ServiceException(e.getLocalizedMessage());
+		}
+
+	}
+//
+//	public static void main(String[] args) throws ServiceException {
+//		UserService reg = new UserService();
+//
+//		User user2 = new User("praveengmail.com", "passWord@786");
+//
+//		reg.loginUser(user2);
+//	}
+
 }

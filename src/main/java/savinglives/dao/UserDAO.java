@@ -1,77 +1,118 @@
 package savinglives.dao;
 
-import java.sql.Connection;
+import java.sql.*;
 
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.ResultSet;
-
-import savinglives.dao.exception.*;
+import savinglives.dao.exception.DAOException;
 import savinglives.model.User;
 
 public class UserDAO {
 
-	// Connect to database
-//	public Connection getConnection() throws SQLException {
-//
-//        String url = "jdbc:mysql://localhost:3306/project";
-//        Connection c = DriverManager.getConnection(url,"root", "123456");
-//		return c;
-//
-//	}
-	
-	
-	
-	
+	// connect to database
 	public Connection getConnection() throws SQLException {
-
-		String url = "jdbc:mqsl://localhost:3306/project";
-		Connection c = DriverManager.getConnection(url,"root", "123456");
-		return c;
+		return DriverManager.getConnection("jdbc:mysql://localhost:3306/savinglives", "root", "123456");
 	}
 
-	// Get user from DB - Login
-	public User login(String email, String password) throws DAOException {
-		try {
-		User user = null;
+	// Get user from DB
+	public boolean login(User user) throws SQLException {
+
 		Connection connection = getConnection();
-		String selectQuery = "SELECT * FROM users WHERE email = ? AND password = ?";
-		PreparedStatement statement = connection.prepareStatement(selectQuery);
-		statement.setString(1,email);
-		statement.setString(2,password);
-		ResultSet rs = statement.executeQuery();
-        while(rs.next()) {
-        	user = new User(rs.getString("email"),rs.getString("password"));
-        }
-		return user;
-		}catch(SQLException e) {
-			throw new DAOException("Failed to Login");
-		}
-		
+		String query = "SELECT * FROM USER WHERE Email = ? AND PASSWORD = ?";
+		PreparedStatement pmt = connection.prepareStatement(query);
+		pmt.setString(1, user.getEmail());
+		pmt.setString(2, user.getPassword());
+
+		ResultSet rs = pmt.executeQuery();
+
+		return rs.next();
 	}
 
-	public boolean createUser(User user) throws DAOException {
+	public boolean register(User user) throws DAOException {
 
-		try {
-			// Get connection
-			Connection connection = getConnection();
+		String query = "INSERT INTO USER (EMAIL ,NAME,PASSWORD,TYPE,phonenumber) VALUES (?,?,?)";
 
-			// Prepare SQL statement
-			String insertQuery = "INSERT INTO users (username, email, password)VALUES(?,?,?)";
-			PreparedStatement statement = connection.prepareStatement(insertQuery);
-			statement.setString(1, user.getUsername());
-			statement.setString(2, user.getEmail());
-			statement.setString(3, user.getPassword());
+		try (Connection connection = getConnection(); PreparedStatement pmt = connection.prepareStatement(query)) {
 
-			// Execute the query
-			int rows = statement.executeUpdate();
+			pmt.setString(1, user.getEmail());
+			pmt.setString(2, user.getUsername());
+			pmt.setString(3, user.getPassword());
+
+			int rows = pmt.executeUpdate();
 
 			// Return successful or not
-			return (rows == 1);
+			return rows == 1;
+
 		} catch (SQLException e) {
-			throw new DAOException("Failed to register User");
+			throw new DAOException("Error while registering the user");
 		}
+	}
+
+	public boolean isEmailAlreadyRegistered(String email) throws DAOException {
+		final String SELECTQUERY = "SELECT email FROM user WHERE email = ?";
+
+		try (PreparedStatement pstmt = getConnection().prepareStatement(SELECTQUERY)) {
+
+			pstmt.setString(1, email);
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+				return rs.next();
+			}
+		} catch (SQLException e) {
+			throw new DAOException("Error in getting the email exist");
+		}
+	}
+
+	public boolean isLogin(User user) throws DAOException {
+
+		final String SELECTQUERY = "SELECT email, password FROM user WHERE email = ? AND password = ?";
+
+		try (PreparedStatement pstmt = getConnection().prepareStatement(SELECTQUERY)) {
+
+			pstmt.setString(1, user.getEmail());
+			pstmt.setString(2, user.getPassword());
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+				return rs.next(); // Return true if the user email and password exists
+			}
+
+		} catch (SQLException e) {
+			throw new DAOException("Error in loggin in");
+		}
+
+	}
+
+	public void updateUser(User user) throws DAOException {
+		UserDAO userDAO = new UserDAO();
+		try (Connection connection = userDAO.getConnection();
+				PreparedStatement stmt = connection
+						.prepareStatement("UPDATE user SET  password=?,name=?,phonenumber=? WHERE email=?")) {
+
+			stmt.setString(1, user.getPassword());
+			stmt.setString(2, user.getUsername());
+			stmt.setString(3, user.getEmail());
+
+			int rows = stmt.executeUpdate();
+			System.out.println("No of rows inserted :" + rows);
+		} catch (SQLException e) {
+			throw new DAOException("Error in updateUser method");
+		}
+	}
+
+	public void deleteUser(String email) throws DAOException {
+		UserDAO userDAO = new UserDAO();
+		try (Connection connection = userDAO.getConnection();
+				PreparedStatement stmt = connection.prepareStatement("DELETE from user WHERE email=?")) {
+
+			stmt.setString(1, email);
+
+			int rows = stmt.executeUpdate();
+			System.out.println("No of rows inserted :" + rows);
+			stmt.close();
+			connection.close();
+
+		} catch (SQLException e) {
+			throw new DAOException("Error in deleteTask method");
+		}
+
 	}
 
 }

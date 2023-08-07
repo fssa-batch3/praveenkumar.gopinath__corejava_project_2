@@ -2,91 +2,94 @@ package savinglives.validation;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import savinglives.model.User;
 import savinglives.validation.exceptions.InvalidUserException;
 
-
 public class UserValidator {
+	public static boolean validateUser(User user) throws InvalidUserException {
+		// User is valid if username is valid and email is valid and password is valid
 
-	/**
-     * Validates a user object.
-     * A valid user must have a valid username, a valid email, and a valid password.
-     *
-     * @param user The user object to validate.
-     * @return true if the user is valid, false otherwise.
-     * @throws InvalidUserException If the user details are not valid.
-     */
-    public static boolean validateUser(User user) throws InvalidUserException {
-        if (user == null) {
-            throw new InvalidUserException("User object is Invalid!");
-        }
+		if (user != null && validateName(user.getUsername()) && validateEmail(user.getEmail())
+				&& validatePassword(user.getPassword())) {
+			return true;
+		} else {
+			throw new InvalidUserException("User details not valid");
+		}
+	}
 
-        boolean isValidUsername = validateName(user.getUsername());
-        boolean isValidEmail = validateEmail(user.getEmail());
-        boolean isValidPassword = validatePassword(user.getPassword());
+//	public static boolean validateId(int id) throws InvalidUserException {
+//		try {
+//			if (id > 0) {
+//				System.out.println("The id is valid");
+//			} else {
+//
+//				throw new InvalidUserException("print some valid id.");
+//			}
+//		} catch (Exception e) {
+//			System.out.println("The value is valid");
+//		}
+//
+//		return id > 0;
+//	}
 
-        if (isValidUsername && isValidEmail && isValidPassword) {
-            return true;
-        } else {
-            throw new InvalidUserException("User details are not valid.");
-        }
-    }
-	    public static boolean validateName(String username) {
-	        if (username == null) {
-	            System.out.println("Username is null. Invalid!");
-	            return false;
-	        }
-	        String regex = "^[A-Za-z]\\w{2,29}$";
-	        Pattern pattern = Pattern.compile(regex);
-	        Matcher matcher = pattern.matcher(username);
-	        boolean isValid = matcher.matches();
-	        if (isValid) {
-	            System.out.println("The username is valid.");
-	        } else {
-	            System.out.println("The username is not valid.");
-	        }
+	public static boolean validateName(String name) throws InvalidUserException {
+		boolean match = false;
+		try {
+			String regex = "^[A-Za-z]\\w{3,29}$";
+			Pattern p = Pattern.compile(regex);
+			Matcher m = p.matcher(name);
+			match = m.matches();
+			if (match) {
+				System.out.println("The user name is valid.");
+			} else {
 
-	        return isValid;
-	    }
-	
-	
-	// Password Validation	
-	    public static boolean validatePassword(String password) {
-	        if (password == null) {
-	            System.out.println("Password is null. Invalid!");
-	            return false;
-	        }
-	        String pattern = "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=])(?=.*[^\\s]).{8,}$";
-	        Pattern regex = Pattern.compile(pattern);
-	        Matcher matcher = regex.matcher(password);
-	        boolean isValid = matcher.matches();
-	        if (isValid) {
-	            System.out.println("The password is valid.");
-	        } else {
-	            System.out.println("The password is not valid.");
-	        }
+				throw new InvalidUserException("The user name is not valid");
+			}
+		} catch (Exception e) {
+			System.out.println("user name is not valid");
+		}
+		return match;
+	}
 
-	        return isValid;
-	    }
-	
-	// Email Validation
-	    //Email validation
-	    public static boolean validateEmail(String email) {
-	        if (email == null) {
-	            System.out.println("Email is Invalid!");
-	            return false;
-	        }
-	        String regex = "^.*@.*\\..*$";
-	        Pattern pattern = Pattern.compile(regex);
-	        Matcher matcher = pattern.matcher(email);
-	        boolean isValid = matcher.matches();
-	        if (isValid) {
-	            System.out.println("The email is valid.");
-	        } else {
-	            System.out.println("The email is invalid.");
-	        }
-	        return isValid;
-	    }
-	   
+	public static boolean validatePassword(String password) throws InvalidUserException {
+		boolean match = false;
+		try {
+			String pattern_string = "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=])(?=.*[^\\s]).{8,}$";
+			match = Pattern.matches(pattern_string, password);
+			if (match) {
+				System.out.println("Valid password.");
+			} else {
+
+				throw new InvalidUserException("Invalid password.");
+			}
+		} catch (PatternSyntaxException e) {
+			System.out.println(e.getMessage());
+		}
+
+		return match;
+	}
+
+	public static boolean validateEmail(String email) throws InvalidUserException {
+		boolean isMatch = false;
+		if (email == null) {
+			return false;
+		}
+		try {
+			String regex = "^.*@.*\\..*$";
+			isMatch = Pattern.matches(regex, email);
+			if (isMatch) {
+				System.out.println("The email address is Valid");
+			} else {
+
+				throw new InvalidUserException("The email address is not valid");
+			}
+			return isMatch;
+		} catch (InvalidUserException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+		return isMatch;
+	}
 }
