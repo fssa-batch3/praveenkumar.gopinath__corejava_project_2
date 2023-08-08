@@ -1,38 +1,44 @@
 package savinglives.model;
 
 public class User {
-	private String username;
+
 	private String email;
+	private String username;
 	private String password;
-//	private String mobileNo;
-//	private String gender;
-//	private String address;
-
-	// Constructor
-	public User(String username, String email, String password) {
-		this.username = username;
-		this.email = email;
-		this.password = password;
-
-	}
 	
 
+	public User() {
+		
+	};
 
-	// Getters and Setters
-	public String getUsername() {
-		return username;
-	}
+	public User(String email, String username, String password) {
 
-	public void setUsername(String username) {
+		this.email = email;
 		this.username = username;
+		this.password = password;
 	}
 
+
+	public User(String user_mail, String user_pwd) {
+		this.email = user_mail;
+		this.password = user_pwd;
+	}
+	
 	public String getEmail() {
 		return email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {
@@ -43,12 +49,13 @@ public class User {
 		this.password = password;
 	}
 
-
-	// toString method
 	@Override
 	public String toString() {
-		return "User [username=" + username + ", email=" + email + ", password=" + password
-				+ ",]";
+		return "User [mail=" + email + ", username=" + username + ", password=" + password + "]";
 	}
+
+	
+
+	
 
 }
