@@ -19,21 +19,6 @@ public class UserValidator {
 		}
 	}
 
-//	public static boolean validateId(int id) throws InvalidUserException {
-//		try {
-//			if (id > 0) {
-//				System.out.println("The id is valid");
-//			} else {
-//
-//				throw new InvalidUserException("print some valid id.");
-//			}
-//		} catch (Exception e) {
-//			System.out.println("The value is valid");
-//		}
-//
-//		return id > 0;
-//	}
-
 	public static boolean validateName(String name) throws InvalidUserException {
 		boolean match = false;
 		try {
@@ -64,10 +49,9 @@ public class UserValidator {
 
 				throw new InvalidUserException("Invalid password.");
 			}
-		} catch (PatternSyntaxException e) {
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-
 		return match;
 	}
 
@@ -80,10 +64,9 @@ public class UserValidator {
 			String regex = "^.*@.*\\..*$";
 			isMatch = Pattern.matches(regex, email);
 			if (isMatch) {
-				System.out.println("The email address is Valid");
+				System.out.println("The email is Valid");
 			} else {
-
-				throw new InvalidUserException("The email address is not valid");
+				throw new InvalidUserException("The email is not valid");
 			}
 			return isMatch;
 		} catch (InvalidUserException e) {

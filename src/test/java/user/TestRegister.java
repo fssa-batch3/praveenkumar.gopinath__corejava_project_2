@@ -13,10 +13,10 @@ import savinglives.service.exception.ServiceException;
 
  class TestRegisterFeature {
 	@Test
-	 void testRegistrationSuccess() {
+	 void testRegistetionSuccess() {
 
 		UserService userservice = new UserService();
-		User user1 = new User("soffan2906@gmail.com", "Soffan", "Wow@2002");
+		User user1 = new User("praveen4623@gmail.com", "Praveen", "Poi@4693");
 
 		try {
 			assertTrue(userservice.registerUser(user1));
@@ -32,7 +32,7 @@ import savinglives.service.exception.ServiceException;
 	 void testRegistrationFail() {
 
 		UserService userservice = new UserService();
-		User user1 = new User("soffafuywg892698gmail.com", "Soffan", "Wow@2002");
+		User user1 = new User("praveenkumargmail.com", "Praveen", "Poi@4693");
 
 		try {
 			assertFalse(userservice.registerUser(user1));

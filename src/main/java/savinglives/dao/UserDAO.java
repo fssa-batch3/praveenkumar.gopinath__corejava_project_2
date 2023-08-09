@@ -27,23 +27,23 @@ public class UserDAO {
 			DB_URL = env.get("DB_URL");
 			DB_USER = env.get("DB_USER");
 			DB_PASSWORD = env.get("DB_PASSWORD");
-			
-			
-			
+
 		}
 		// Connecting to DB
-		return  DriverManager.getConnection("jdbc:mysql://localhost:3306/savinglives", "root", "123456");//DB_URL; DB_USER; DB_PASSWORD;
-		
+		return DriverManager.getConnection("jdbc:mysql://localhost:3306/savinglives", "root", "123456");// DB_URL;
+																										// DB_USER;
+																										// DB_PASSWORD;
+
 	}
 
-	// Add new user to DB - register
+	// Add new user in DB register
 	public boolean create(User user) throws DAOException {
 		if (user == null) {
 			System.out.println("User Must not be null");
 			return false;
 		}
 
-		String query = "INSERT INTO userdata (user_name, user_mail, user_pwd, mobileno) VALUES (?, ?, ?);";
+		String query = "INSERT INTO user (username, email, password) VALUES (?, ?, ?);";
 		try (PreparedStatement pst = getConnection().prepareStatement(query);) {
 			pst.setString(1, user.getUsername());
 			pst.setString(2, user.getEmail());
@@ -53,6 +53,7 @@ public class UserDAO {
 
 			return (rows == 1);
 		} catch (SQLException e) {
+	
 			throw new DAOException("Sql Exception while creating user ");
 		}
 	}
@@ -60,7 +61,7 @@ public class UserDAO {
 //	update user
 
 	public boolean updateUser(User user) throws SQLException, DAOException {
-		final String query = "UPDATE userdata SET user_name = ?, user_pwd = ?, WHERE user_email = ?;";
+		final String query = "UPDATE user SET username = ?, password = ?, WHERE email = ?;";
 
 		try (PreparedStatement pst = getConnection().prepareStatement(query)) {
 
@@ -71,18 +72,18 @@ public class UserDAO {
 			if (rows == 0) {
 				throw new DAOException("User with email: " + user.getEmail() + " not found in the database.");
 			}
-			return (rows==1);
-			
+			return (rows == 1);
+
 		} catch (SQLException e) {
-			
+
 			throw new DAOException("Error updating user in the database");
 		}
-		
-	} 
 
-	// check email is already exist
+	}
+
+	// check if Email is already exist
 	public boolean isEmailAlreadyRegistered(String email) throws DAOException {
-		final String query = "SELECT user_email FROM userdata WHERE user_email = ?";
+		final String query = "SELECT email FROM user WHERE email = ?";
 
 		try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
 
@@ -111,14 +112,14 @@ public class UserDAO {
 	public boolean loginUser(User user) throws DAOException {
 		String email = user.getEmail();
 
-		String query = "SELECT user_email,user_pwd FROM userdata WHERE user_email = ?;";
+		String query = "SELECT email,password FROM user WHERE email = ?;";
 		try (PreparedStatement pst = getConnection().prepareStatement(query)) {
 			pst.setString(1, email);
 			try (ResultSet rs = pst.executeQuery()) {
 
 				// User found, login successful else
 				if (rs.next()) {
-					String passwordfromDb = rs.getString("user_pwd");
+					String passwordfromDb = rs.getString("password");
 					setUserPasswordFromDb(passwordfromDb);
 					return true;
 				}
@@ -127,6 +128,17 @@ public class UserDAO {
 			throw new DAOException("Error in loggin in");
 		}
 		return false;
-	} 
+	}
+
+	
+	
+	public static void main(String[] args) {
+		try {
+			new UserDAO().create(
+					new User("praveenkumar.gopinath@fssa.freshworks.com", "Praveenkumar", "Praveen@123"));
+		} catch (DAOException e) {
+			e.printStackTrace();
+		}
+	}
 
 }

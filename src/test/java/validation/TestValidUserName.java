@@ -1,71 +1,78 @@
 package validation;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import savinglives.validation.UserValidator;
+import savinglives.validation.exceptions.InvalidUserException;
 
-import savinglives.validation.*;
-import savinglives.validation.exceptions.*;
-
-class TestValidateUsername {
+public class TestValidUserName {
 	@Test
-	void testValidUsername() {
+	public void testValidUsername() {
 		try {
-			assertTrue(UserValidator.validateName("paveen"));
+
+			assertTrue(UserValidator.validateName("Praveen"));
+			System.out.println("username is valid");
 		} catch (InvalidUserException e) {
-			System.out.println("Hello!!! Username is valid");
+			System.out.println(e.getMessage());
 		}
 	}
 
 	@Test
-	void testInvalidUsernameStartingWithNumber() {
+	public void testInvalidUsernameStartingWithNumber() {
 		try {
-			assertFalse(UserValidator.validateName("1234Praveen"));
+
+			assertFalse(UserValidator.validateName("1Praveen"));
+
 		} catch (InvalidUserException e) {
-			e.printStackTrace();
+			System.out.println("username should not start with number");
+
 		}
-		System.out.println("Hello!!! Username shouldn't start with number");
 	}
 
 	@Test
-	void testInvalidUsernameStartingWithSpecialCharacter() {
+	public void testInvalidUsernameStartingWithSpecialCharacter() {
 		try {
-			assertFalse(UserValidator.validateName("!#$praveen"));
-		} catch (InvalidUserException e) {
-			e.printStackTrace();
-		}
 
-		System.out.println("Hello!!! Username shouldn't contains special character");
+			assertFalse(UserValidator.validateName("#praveen"));
+			System.out.println("username should not contains special character");
+		} catch (InvalidUserException e) {
+
+			System.out.println(e.getMessage());
+		}
 	}
 
 	@Test
-	void testInvalidUsernameWithSpaces() {
+	public void testInvalidUsernameWithSpaces() {
 		try {
-			assertFalse(UserValidator.validateName("prav een"));
+
+			assertFalse(UserValidator.validateName("Praveen kumar"));
+			System.out.println("username should not contains spaces ");
 		} catch (InvalidUserException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
-		System.out.println("Hello!!! Username shouldn't contains spaces ");
 	}
 
 	@Test
-	void testInvalidUsernameToShort() {
+	public void testInvalidUsernameToShort() {
 		try {
-			assertFalse(UserValidator.validateName("PRA"));
+
+			assertFalse(UserValidator.validateName("Pra"));
+			System.out.println("username should not be to small ");
 		} catch (InvalidUserException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
-		System.out.println(" Hello!!! Username shouldn't be too small ");
 	}
 
 	@Test
-	public void testInvalidUsernameToLong() {
+	public void testInvalidUsernameTooLong() {
 		try {
-			assertFalse(UserValidator.validateName("Praveeeeeeeeeeeeeennnnnnnnkumaaaarrrr"));
+
+			assertFalse(UserValidator.validateName("Pravvvvveeeeeeeeeeeeeeennnnnnnn"));
+			System.out.println("username should not be to long ");
 		} catch (InvalidUserException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
-		System.out.println("Hello!!! Username shouldn't be too long ");
 	}
 }

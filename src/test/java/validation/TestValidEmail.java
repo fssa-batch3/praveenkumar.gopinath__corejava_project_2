@@ -1,46 +1,46 @@
 package validation;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import savinglives.validation.UserValidator;
+import savinglives.validation.exceptions.InvalidUserException;
 
-import savinglives.validation.*;
-import savinglives.validation.exceptions.*;
-
-
-class TestValidEmail {
-
+public class TestValidEmail {
 	@Test
 	void testValidEmail() {
+
 		try {
 
-			assertTrue(UserValidator.validateEmail("praveen007@gmail.com"));
+			assertTrue(UserValidator.validateEmail("praveen4693@gmail.com"));
 			System.out.println("Your email is valid");
 		} catch (InvalidUserException e) {
 			System.out.println(e.getMessage());
+			fail();
 		}
 	}
 
 	@Test
-	 void testInvalidEmailWithoutAtSymbol() {
+	void testInvalidEmailWithoutAtSymbol() {
 		try {
 
-			assertFalse(UserValidator.validateEmail("kumar1234gmail.com"));
+			assertFalse(UserValidator.validateEmail("praveen4693gmail.com"));
 			System.out.println("Your email is not valid");
 		} catch (InvalidUserException e) {
-			System.out.println(e.getMessage());
+			System.out.println("Your email is valid");
 		}
 	}
 
 	@Test
-	 void testInvalidEmailWithoutcom() {
+	void testInvalidEmailWithoutcom() {
 		try {
-
-			assertFalse(UserValidator.validateEmail("praveen46@"));
+			assertFalse(UserValidator.validateEmail("praveen4693@"));
 			System.out.println("Your email is not valid");
+
 		} catch (InvalidUserException e) {
-			System.out.println(e.getMessage());
+			System.out.println("Your email is valid");
 		}
 	}
+
 }

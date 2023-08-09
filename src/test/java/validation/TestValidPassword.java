@@ -1,85 +1,79 @@
 package validation;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import savinglives.validation.UserValidator;
+import savinglives.validation.exceptions.InvalidUserException;
 
-import savinglives.validation.*;
-import savinglives.validation.exceptions.*;
-
-class TestValidPassword {
-
-	@Test
-	void testValidPassword() {
-
-		try {
-			assertTrue(UserValidator.validatePassword("Password@123"));
-		} catch (InvalidUserException e) {
-			e.printStackTrace();
-		}
-		System.out.println("Your password is valid");
+ class TestValidatePassword {
+@Test
+ void TestValidPassword() {
+	try {
+		
+		assertTrue(UserValidator.validatePassword("Poi@4693"));
+		System.out.println("The password is valid");
+	} catch (InvalidUserException e) {
+		System.out.println(e.getMessage());
 	}
-
-	@Test
-	void testInvalidPasswordWithoutSpecialCharacter() {
-
-		try {
-
-			assertFalse(UserValidator.validatePassword("Password123"));
-			System.out.println("Your password is not valid");
-		} catch (InvalidUserException e) {
-			System.out.println(e.getMessage());
-		}
+	
+	
+}
+@Test
+ void TestInValidPassword() {
+	try {
+		
+		assertFalse(UserValidator.validatePassword("Poi4693"));
+		System.out.println("The password is not valid");
+	} catch (InvalidUserException e) {
+		
+		System.out.println(e.getMessage());
 	}
+}
 
-	@Test
-	void testInvalidPasswordWithoutNumbers() {
-
-		try {
-
-			assertFalse(UserValidator.validatePassword("Password@"));
-			System.out.println("Your password is not valid");
-		} catch (InvalidUserException e) {
-			System.out.println(e.getMessage());
-		}
+@Test
+ void TestInValidPasswordWithoutNumbers() {
+	try {
+		
+		assertFalse(UserValidator.validatePassword("Poi@"));
+		System.out.println("The password is without numbers");
+	} catch (InvalidUserException e) {
+		
+		System.out.println(e.getMessage());
 	}
-
-	@Test
-	void testInvalidPasswordWithoutCapitalLetter() {
-
-		try {
-
-			assertFalse(UserValidator.validatePassword("password@123"));
-			System.out.println("Your password is not valid");
-		} catch (InvalidUserException e) {
-			System.out.println(e.getMessage());
-		}
+}
+@Test
+ void TestInValidPasswordWithoutCapitalLetters() {
+	try {
+		
+		assertFalse(UserValidator.validatePassword("poi@4693"));
+		System.out.println("The password is without Capital letters");
+	} catch (InvalidUserException e) {
+	
+		System.out.println(e.getMessage());
 	}
-
-	@Test
-	void testInvalidPasswordWithoutSmallLetter() {
-
-		try {
-
-			assertFalse(UserValidator.validatePassword("PASSWORD@123"));
-			System.out.println("Your password is valid");
-		} catch (InvalidUserException e) {
-			System.out.println(e.getMessage());
-		}
+}
+@Test
+ void TestInValidPasswordWithoutSmallLetters() {
+	try {
+		
+		assertFalse(UserValidator.validatePassword("POI@4693"));
+		System.out.println("The password is without small letters");
+	} catch (InvalidUserException e) {
+		
+		System.out.println(e.getMessage());
 	}
-
-	@Test
-	void testInvalidPasswordShorterLength() {
-
-		try {
-
-			assertFalse(UserValidator.validatePassword("Pas"));
-			System.out.println("Your password is valid");
-		} catch (InvalidUserException e) {
-			System.out.println(e.getMessage());
-
-		}
+}
+@Test
+ void TestInValidPasswordShorterLength() {
+	try {
+		
+		assertFalse(UserValidator.validatePassword("P@4693"));
+		System.out.println("The password too short");
+	} catch (InvalidUserException e) {
+		System.out.println(e.getMessage());
 	}
+}
 
 }
