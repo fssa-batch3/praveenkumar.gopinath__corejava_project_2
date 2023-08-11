@@ -44,7 +44,7 @@ public class UserService {
 			UserValidator.validatePassword(user.getPassword());
 
 			UserDAO userDAO = new UserDAO();
-			if (userDAO.loginUser(user) && (userDAO.getUserPasswordFromDb().equals(user.getPassword()))) {
+			if (userDAO.loginUser(user) && (userDAO.getUserPasswordFromDatabase().equals(user.getPassword()))) {
 				return true; // Return true for successful login.
 			}
 		} catch (DAOException | InvalidUserException e) {

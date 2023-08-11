@@ -17,12 +17,9 @@ public class User {
 		this.username = username;
 		this.password = password;
 	}
-
-
-	public User(String user_mail, String user_pwd) {
-		this.email = user_mail;
-		this.password = user_pwd;
-	}
+	
+	
+	
 	
 	public String getEmail() {
 		return email;

@@ -7,32 +7,31 @@ import savinglives.service.*;
 import savinglives.service.exception.ServiceException;
 import savinglives.model.*;
 
- class TestLogin{
+class TestLogin {
 
 	@Test
-	 void loginSuccess() {
+	void loginSuccess() {
 		UserService userService = new UserService();
 
-		User user1 = new User("praveen@gmail.com",  "poi@2002");
+		User user1 = new User("praveen@gmail.com", "poi@2002", null);
 		try {
-			
+
 			assertTrue(userService.loginUser(user1));
 			throw new ServiceException("Login Ssuccessfully. Welcome, " + user1.getEmail() + "!");
 		} catch (ServiceException e) {
-
 			System.out.println(e.getMessage());
 		}
-	}  
- 
+	}
+
 	@Test
-	 void loginFailed() {
+	void loginFailed() {
 		UserService userService = new UserService();
-		User user1 = new User("praveenkumar1234@gmail.com",  "kumar@3456");
+		User user1 = new User("praveenkumar1234@gmail.com", "kumar@3456", null);
 		try {
 			assertFalse(userService.loginUser(user1));
 			throw new ServiceException("Login Failed.Register again");
 		} catch (ServiceException e) {
 			System.out.println(e.getMessage());
 		}
-	} 
+	}
 }

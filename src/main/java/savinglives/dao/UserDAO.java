@@ -17,6 +17,11 @@ public class UserDAO {
 		String DB_URL;
 		String DB_USER;
 		String DB_PASSWORD;
+		
+		String LOCAL_DB_URL = "jdbc:mysql://localhost:3306/savinglives";
+		String LOCAL_DB_USER = "root";
+		String LOCAL_DB_PASSWORD = "123456";
+		
 
 		if (System.getenv("CI") != null) {
 			DB_URL = System.getenv("DB_URL");
@@ -30,7 +35,7 @@ public class UserDAO {
 
 		}
 		// Connecting to DB
-		return DriverManager.getConnection("jdbc:mysql://localhost:3306/savinglives", "root", "123456");// DB_URL;
+		return DriverManager.getConnection(LOCAL_DB_URL, LOCAL_DB_USER, LOCAL_DB_PASSWORD);// DB_URL;
 																										// DB_USER;
 																										// DB_PASSWORD;
 
@@ -96,15 +101,17 @@ public class UserDAO {
 			throw new DAOException("Error in getting the email exist", e);
 		}
 	}
+	
+	
 
-	private String userPasswordFromDb;
+	private String userPasswordFromDatabase;
 
-	public String getUserPasswordFromDb() {
-		return userPasswordFromDb;
+	public String getUserPasswordFromDatabase() {
+		return userPasswordFromDatabase;
 	}
 
-	public void setUserPasswordFromDb(String userPasswordFromDb) {
-		this.userPasswordFromDb = userPasswordFromDb;
+	public void setUserPasswordFromDatabase(String userPasswordFromDatabase) {
+		this.userPasswordFromDatabase = userPasswordFromDatabase;
 	}
 
 	// login user
@@ -119,8 +126,8 @@ public class UserDAO {
 
 				// User found, login successful else
 				if (rs.next()) {
-					String passwordfromDb = rs.getString("password");
-					setUserPasswordFromDb(passwordfromDb);
+					String passwordfromDatabase = rs.getString("password");
+					setUserPasswordFromDatabase(passwordfromDatabase);
 					return true;
 				}
 			}
