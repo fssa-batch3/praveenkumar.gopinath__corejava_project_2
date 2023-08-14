@@ -3,18 +3,16 @@ package savinglives.model;
 public class Request {
 	
 	public String title;
-	public String description;
-	public String group;
+	public String desc;
+	public String blood_group;
 	public String date;
-	public String id;
 	public String number;
 
-	public Request(String title,String description,String group,String date,String id,String number) {
+	public Request(String title,String desc,String blood_group,String date,String number) {
 		this.title = title;
-		this.description = description;
-		this.group =  group;
+		this.desc = desc;
+		this.blood_group =  blood_group;
 		this.date = date;
-		this.id = id;
 		this.number = number;
 	}
 	
@@ -22,21 +20,18 @@ public class Request {
 		this.title=title;
 	}
 	
-	public void setdescription(String description) {
-		this.description = description;
+	public void setdesc(String desc) {
+		this.desc = desc;
 	}
 	
-	public void setgroup(String group) {
-		this.group = group;
+	public void setblood_group(String blood_group) {
+		this.blood_group = blood_group;
 	}
 	
 	public void setdate(String date) {
 		this.date = date;
 	}
 	
-	public void setid(String id) {
-		this.id = id;
-	}
 	
 	public void setnumber(String number) {
 		this.number = number;
@@ -48,21 +43,18 @@ public class Request {
 		return title;
 	}
 	
-	public String getdescription() {
-		return description;
+	public String getdesc() {
+		return desc;
 	}
 	
-	public String getgroup() {
-		return group;
+	public String getblood_group() {
+		return blood_group;
 	}
 	
 	public String getdate() {
 		return date;
 	}
 
-	public String getid() {
-		return id;
-	}
 	
 	public String getnumber() {
 		return number;
@@ -72,4 +64,5 @@ public class Request {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 }

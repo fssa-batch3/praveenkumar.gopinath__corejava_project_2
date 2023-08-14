@@ -33,7 +33,7 @@ public class UserValidator {
 				throw new InvalidUserException("The user name is not valid");
 			}
 		} catch (Exception e) {
-			System.out.println("user name is not valid");
+			System.out.println(e.getMessage());
 		}
 		return match;
 	}
@@ -68,7 +68,6 @@ public class UserValidator {
 			} else {
 				throw new InvalidUserException("The email is not valid");
 			}
-			return isMatch;
 		} catch (InvalidUserException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());

@@ -1,7 +1,5 @@
 package savinglives.service;
 
-import java.sql.SQLException;
-
 import savinglives.dao.UserDAO;
 import savinglives.dao.exception.DAOException;
 import savinglives.model.User;
@@ -38,6 +36,8 @@ public class UserService {
 //	Login service logic code
 
 	public boolean loginUser(User user) throws ServiceException {
+		boolean isMatch = false;
+
 		try {
 
 			UserValidator.validateEmail(user.getEmail());
@@ -45,35 +45,13 @@ public class UserService {
 
 			UserDAO userDAO = new UserDAO();
 			if (userDAO.loginUser(user) && (userDAO.getUserPasswordFromDatabase().equals(user.getPassword()))) {
-				return true; // Return true for successful login.
+				return true;
 			}
 		} catch (DAOException | InvalidUserException e) {
 
 			throw new ServiceException(e.getMessage());
 		}
-		return false;
-	}
-
-//	update user service logic
-	public boolean updateUser(User user) throws ServiceException {
-
-		UserDAO userDAO = new UserDAO();
-
-		try {
-			UserValidator.validateUser(user);
-
-			if (userDAO.updateUser(user)) {
-				throw new DAOException(user.getUsername() + " successfully updated");
-
-			} else {
-				System.out.println("Update was not successful");
-				return false;
-			}
-
-		} catch (DAOException | InvalidUserException | SQLException e) {
-			throw new ServiceException(e.getMessage());
-		}
-		
+		return isMatch;
 	}
 
 }
