@@ -1,21 +1,24 @@
 package com.fssa.savinglives.model;
 
-public class Request {
-	
-	public String title;
-	public String desc;
-	public String blood_group;
-	public String date;
-	public String number;
 
-	public Request(String title,String desc,String blood_group,String date,String number) {
-		this.title = title;
-		this.desc = desc;
-		this.blood_group =  blood_group;
-		this.date = date;
-		this.number = number;
-	}
-	
+
+public class Request {
+		
+		public String title;
+		public String desc;
+		public String bloodGroup;
+		public String date;
+		public String number;
+
+	    public Request(String title, String desc, String bloodGroup, String date, String number) {
+	        this.title = title;
+	        this.desc = desc;
+	        this.bloodGroup = bloodGroup;
+	        this.date = date;
+	        this.number = number;
+	    }
+
+
 	public void settitle(String title) {
 		this.title=title;
 	}
@@ -24,8 +27,8 @@ public class Request {
 		this.desc = desc;
 	}
 	
-	public void setblood_group(String blood_group) {
-		this.blood_group = blood_group;
+	public void setbloodgroup(String bloodGroup) {
+		this.bloodGroup = bloodGroup;
 	}
 	
 	public void setdate(String date) {
@@ -47,8 +50,8 @@ public class Request {
 		return desc;
 	}
 	
-	public String getblood_group() {
-		return blood_group;
+	public String getbloodgroup() {
+		return bloodGroup;
 	}
 	
 	public String getdate() {
@@ -60,9 +63,8 @@ public class Request {
 		return number;
 	}
 
-	public boolean createrequest(Request request) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
+	public int getId() {
+		return 0;
+	}
 }

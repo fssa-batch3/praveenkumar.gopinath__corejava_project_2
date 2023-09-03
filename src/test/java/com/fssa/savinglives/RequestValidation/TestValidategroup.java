@@ -14,7 +14,7 @@ public class TestValidategroup {
 	@Test
 	void testValidategroup() {
 		try {
-			assertTrue(RequestValidator.Validategroup("AB+"));
+			assertTrue(RequestValidator.validateGroup("AB+"));
 			System.out.println("The request Blood group is validate");
 		} catch (InvalidRequestException e) {
 			System.out.println(e.getMessage());
@@ -25,7 +25,7 @@ public class TestValidategroup {
 	@Test
 	void testValidategroupWithAlphabetLetters() {
 		try {
-			assertTrue(RequestValidator.Validategroup("O-"));
+			assertTrue(RequestValidator.validateGroup("O-"));
 			System.out.println("The request Blood group is validate");
 		} catch (InvalidRequestException e) {
 			System.out.println(e.getMessage());
@@ -36,7 +36,7 @@ public class TestValidategroup {
 	@Test
 	void testInvalidategroupWithoutAlphabetLetters() {
 		try {
-			assertFalse(RequestValidator.Validategroup("123"));
+			assertFalse(RequestValidator.validateGroup("123"));
 			System.out.println("The request Blood group is validate");
 		} catch (InvalidRequestException e) {
 			System.out.println(e.getMessage());
@@ -46,7 +46,7 @@ public class TestValidategroup {
 	@Test
 	void testvalidategroupWithAtPositiveSymbolOrNegativeSymbol() {
 		try {
-			assertTrue(RequestValidator.Validategroup("A-"));
+			assertTrue(RequestValidator.validateGroup("A-"));
 			System.out.println("The request Blood group is validate");
 		} catch (InvalidRequestException e) {
 			System.out.println(e.getMessage());

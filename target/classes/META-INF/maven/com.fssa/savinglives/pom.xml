@@ -12,11 +12,6 @@
 
 		<!--
 		<https://mvnrepository.com/artifact/io.github.cdimascio/java-dotenv> -->
-		<dependency>
-			<groupId>io.github.cdimascio</groupId>
-			<artifactId>java-dotenv</artifactId>
-			<version>5.2.2</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
@@ -49,7 +44,7 @@
 		<maven.compiler.source>17</maven.compiler.source>
 
 		<sonar.organization>fssa-batch3</sonar.organization>
-<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-<sonar.projectKey>fssa-batch3_praveenkumar_gopinath_corejava_project_2</sonar.projectKey>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<sonar.projectKey>fssa-batch3_praveenkumar_gopinath_corejava_project_2</sonar.projectKey>
 	</properties>
 </project>

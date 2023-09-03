@@ -13,7 +13,7 @@ public class RequestService {
 
 		RequestDAO requestDAO = new RequestDAO();
 		try {
-			RequestValidator.Validation(request);
+			RequestValidator.validation(request);
 			if (requestDAO.createRequest(request)) {
 				System.out.println("Successfully created");
 				return true;
@@ -32,10 +32,10 @@ public class RequestService {
 		RequestDAO requestDAO = new RequestDAO();
 
 		try {
-			RequestValidator.Validation(request);
+			RequestValidator.validation(request);
 			if (requestDAO.createRequest(request)) {
 				System.out.println("Successfully Reading");
-				return true;
+				return false;
 			} else {
 				System.out.println("Request is not successfully read");
 				return false;
@@ -43,7 +43,6 @@ public class RequestService {
 		} catch (DAOException | InvalidRequestException e) {
 			throw new ServiceException(e);
 		}
-
 	}
 
 	public boolean updateRequest(Request request) throws ServiceException, DAOException {
@@ -51,7 +50,7 @@ public class RequestService {
 		RequestDAO requestDAO = new RequestDAO();
 
 		try {
-			RequestValidator.Validation(request);
+			RequestValidator.validation(request);
 			if (requestDAO.updateRequest(request)) {
 				System.out.println("Successfully Reading");
 				return true;
@@ -62,8 +61,6 @@ public class RequestService {
 		} catch (DAOException | InvalidRequestException e) {
 			throw new ServiceException(e);
 		}
-		
-		
 
 	}
 
