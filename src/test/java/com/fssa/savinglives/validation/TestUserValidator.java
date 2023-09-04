@@ -16,7 +16,7 @@ class TestUserValidator {
 			System.out.println("username is valid");
 		} catch (InvalidUserException e) {
 			System.out.println(e.getMessage());
-		}
+		} 
 		
 	}
 	

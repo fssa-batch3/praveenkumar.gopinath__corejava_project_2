@@ -29,7 +29,7 @@ class TestValidateEmail {
             System.out.println("Valid email");
         }
     }
-
+ 
     @Test
     void testInvalidEmailWithoutcom() {
         try {

@@ -15,9 +15,9 @@ class TestRegister {
 
 		UserService userservice = new UserService();
 		User user1 = new User();
-		user1.setEmail("praveenkumar1234@gmail.com");
-		user1.setName("Praveen");
-		user1.setPassword("Duke@390");
+		user1.setEmail("thanush7890@gmail.com");
+		user1.setName("Thanush");
+		user1.setPassword("Thanu@1234");
 		try {
 			assertTrue(userservice.registerUser(user1));
 		} catch (ServiceException e) {
@@ -32,9 +32,9 @@ class TestRegister {
 
 		UserService userservice = new UserService();
 		User user1 = new User();
-		user1.setEmail("praveen1234gmail.com");
-		user1.setName("Praveen");
-		user1.setPassword("Duke@390");
+		user1.setEmail("roshan1234@gmail.com");
+		user1.setName("Roshan");
+		user1.setPassword("Duke@250");
 		try {
 			assertFalse(userservice.registerUser(user1));
 		} catch (ServiceException e) {

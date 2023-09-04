@@ -30,7 +30,7 @@ class TestUpdateUserFeature {
 
 	@Test
 	void testUpdateFail() {
-
+ 
 		UserService userservice = new UserService();
 
 		User user1 = new User("roshan@1234", "roshan", "rosh@250");

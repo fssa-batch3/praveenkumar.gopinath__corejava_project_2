@@ -1,25 +1,24 @@
 package com.fssa.savinglives.model;
 
-
 public class User {
 
 	private String email;
 	private String name;
 	private String password;
 
-	public User(String name, String email, String password) {
+	public User(String email, String name, String password) {
 		this.name = name;
 		this.email = email;
 		this.password = password;
 	}
 
-	public User(String name, String email) {
-		this.name = name;
-		
-	}
 
 	public User() {
 	}
+
+	public User(String email, String password) {
+	}
+
 
 	public String getName() {
 		return name;
@@ -49,7 +48,6 @@ public class User {
 	public String toString() {
 		return "User [name=" + name + ",email=" + email + ", password=" + password + "]";
 	}
-	
-	// (Connection connection = ConnectionUtil.getConnection();
-	// PreparedStatement pst = connection.prepareStatement(query))
+
+ 
 }

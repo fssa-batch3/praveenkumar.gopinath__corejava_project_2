@@ -19,7 +19,7 @@ public class UserService {
 	 */
 	public boolean registerUser(User user) throws ServiceException {
 
-		UserDAO userDAO = new UserDAO();
+		UserDAO userDAO = new UserDAO(); 
 
 		try {
 
