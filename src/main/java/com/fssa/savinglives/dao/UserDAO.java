@@ -101,7 +101,7 @@ public class UserDAO {
 
 			pst.setString(1, email);
 
-			try (ResultSet rs = pst.executeQuery()) {
+			try (ResultSet rs = pst.executeQuery()) { 
 				return rs.next(); // Return true if the email exists
 			}
 		} catch (SQLException e) {

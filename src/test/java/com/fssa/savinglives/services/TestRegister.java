@@ -15,16 +15,16 @@ class TestRegister {
 
 		UserService userservice = new UserService();
 		User user1 = new User();
-		user1.setEmail("thanush7890@gmail.com");
-		user1.setName("Thanush");
-		user1.setPassword("Thanu@1234");
+		user1.setEmail("dhanush460323@gmail.com");
+		user1.setName("Danush");
+		user1.setPassword("Dhanu@1234");
 		try {
 			assertTrue(userservice.registerUser(user1));
 		} catch (ServiceException e) {
 			e.printStackTrace();
 			System.out.println(e);
 		}
- 
+  
 	}
 
 	@Test
@@ -32,9 +32,9 @@ class TestRegister {
 
 		UserService userservice = new UserService();
 		User user1 = new User();
-		user1.setEmail("roshan1234@gmail.com");
-		user1.setName("Roshan");
-		user1.setPassword("Duke@250");
+		user1.setEmail(null);
+		user1.setName(null);
+		user1.setPassword(null);
 		try {
 			assertFalse(userservice.registerUser(user1));
 		} catch (ServiceException e) {

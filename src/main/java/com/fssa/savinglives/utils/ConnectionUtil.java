@@ -8,13 +8,12 @@ import java.sql.SQLException;
  * A utility class for managing database connections.
  */
 public class ConnectionUtil {
-	private ConnectionUtil() {}
 	 /*
      * This class provides a utility method for obtaining a database connection.
      * The getConnection() method retrieves connection details from environment variables or a .env file.
      * It returns a Connection object for interacting with the database.
      */
-	public static Connection getConnection()  {
+	public static Connection getConnection() {
 		String dbUrl;
 		String dbUser;
 		String dbPassword;
@@ -23,7 +22,7 @@ public class ConnectionUtil {
 			dbUser = System.getenv("DB_USER");
 			dbPassword = System.getenv("DB_PASSWORD");
 	
-		// Connecting to DB 
+		// Connecting to DB  
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			return DriverManager.getConnection(dbUrl, dbUser, dbPassword);

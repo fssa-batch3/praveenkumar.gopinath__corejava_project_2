@@ -26,7 +26,7 @@ public class UserService {
 			UserValidator.validateUser(user);
 			if (userDAO.isEmailAlreadyRegistered(user.getEmail())) {
 				throw new DAOException("Email already exists");
-			}
+			} 
 			if (userDAO.createUser(user)) {
 				return true;
 			} else {
