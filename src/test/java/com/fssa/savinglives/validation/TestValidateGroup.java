@@ -1,4 +1,4 @@
-package com.fssa.savinglives.RequestValidation;
+package com.fssa.savinglives.validation;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import com.fssa.savinglives.validation.RequestValidator;
 import com.fssa.savinglives.validation.exceptions.InvalidRequestException;
 
-public class TestValidategroup {
+public class TestValidateGroup {
 
 	@Test
 	void testValidategroup() {

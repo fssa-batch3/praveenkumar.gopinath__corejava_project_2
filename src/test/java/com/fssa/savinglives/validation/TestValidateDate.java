@@ -1,4 +1,4 @@
-package com.fssa.savinglives.RequestValidation;
+package com.fssa.savinglives.validation;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;

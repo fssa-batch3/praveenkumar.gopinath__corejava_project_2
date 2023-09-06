@@ -1,5 +1,7 @@
 package com.fssa.savinglives.service;
 
+import java.util.List;
+
 import com.fssa.savinglives.dao.RequestDAO;
 import com.fssa.savinglives.dao.exception.DAOException;
 import com.fssa.savinglives.model.Request;
@@ -9,11 +11,11 @@ import com.fssa.savinglives.validation.exceptions.InvalidRequestException;
 
 public class RequestService {
 
-	public boolean create(Request request) throws ServiceException {
+	public boolean registerRequest(Request request) throws ServiceException {
 
 		RequestDAO requestDAO = new RequestDAO();
 		try {
-			RequestValidator.validation(request);
+			RequestValidator.validationRequest(request);
 			if (requestDAO.createRequest(request)) {
 				System.out.println("Successfully created");
 				return true;
@@ -27,12 +29,12 @@ public class RequestService {
 
 	}
 
-	public boolean readRequest(Request request) throws ServiceException {
+	public static boolean readRequest(Request request) throws ServiceException {
 
 		RequestDAO requestDAO = new RequestDAO();
 
 		try {
-			RequestValidator.validation(request);
+			RequestValidator.validationRequest(request);
 			if (requestDAO.createRequest(request)) {
 				System.out.println("Successfully Reading");
 				return false;
@@ -50,7 +52,7 @@ public class RequestService {
 		RequestDAO requestDAO = new RequestDAO();
 
 		try {
-			RequestValidator.validation(request);
+			RequestValidator.validationRequest(request);
 			if (requestDAO.updateRequest(request)) {
 				System.out.println("Successfully Reading");
 				return true;
@@ -62,6 +64,26 @@ public class RequestService {
 			throw new ServiceException(e);
 		}
 
+	}
+
+	public static List<Request> getRequestsByBloodGroup(String bloodGroup) throws ServiceException {
+		List<Request> requestList = null;
+		RequestDAO requestDAO = new RequestDAO();
+
+		try {
+			List<Request> requestList1 = requestDAO.getRequestsByBloodGroup(bloodGroup);
+			RequestValidator.validateGetAllRequests(requestList1);
+
+			System.out.println("Successfully got the requests.");
+			return requestList1;
+
+		} catch (DAOException e) {
+			e.printStackTrace();
+			throw new ServiceException("Error in data access", e);
+		} catch (InvalidRequestException e) {
+			e.printStackTrace();
+			throw new ServiceException("Invalid request", e);
+		}
 	}
 
 }

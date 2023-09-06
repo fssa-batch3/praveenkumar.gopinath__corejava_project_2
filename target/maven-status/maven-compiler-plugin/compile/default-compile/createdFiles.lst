@@ -9,6 +9,5 @@ com\fssa\savinglives\service\RequestService.class
 com\fssa\savinglives\validation\UserValidator.class
 com\fssa\savinglives\dao\exception\DAOException.class
 com\fssa\savinglives\model\Request.class
-com\fssa\savinglives\model\Account.class
 com\fssa\savinglives\validation\exceptions\InvalidRequestException.class
 com\fssa\savinglives\service\UserService.class

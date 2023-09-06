@@ -1,5 +1,6 @@
 package com.fssa.savinglives.validation;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 
@@ -8,7 +9,7 @@ import com.fssa.savinglives.validation.exceptions.InvalidRequestException;
 
 public class RequestValidator {
 
-    public static boolean validation(Request request) throws InvalidRequestException {
+    public static boolean validationRequest(Request request) throws InvalidRequestException {
 
         if (request != null
                 && validateGroup(request.getbloodgroup())
@@ -19,6 +20,14 @@ public class RequestValidator {
             return false;
         }
     }
+    
+    
+    public static void validateGetAllRequests(List<Request> request) throws InvalidRequestException {
+
+		if (request == null || request.isEmpty())
+			throw new InvalidRequestException("There is no request");
+
+	}
 
     // Pattern
     public static boolean validateGroup(String group) throws InvalidRequestException {
