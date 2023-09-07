@@ -157,8 +157,4 @@ public class UserDAO {
 		}
 		return false;
 	}
-
-	// (Connection connection = ConnectionUtil.getConnection();
-	// PreparedStatement pst = connection.prepareStatement(query))
-
 }

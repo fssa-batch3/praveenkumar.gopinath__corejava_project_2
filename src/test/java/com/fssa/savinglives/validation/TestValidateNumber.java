@@ -6,14 +6,13 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 
-import com.fssa.savinglives.validation.RequestValidator;
 import com.fssa.savinglives.validation.exceptions.InvalidRequestException;
 
 public class TestValidateNumber {
 	@Test
     void testValidatenumberValidNumber() {
         try {
-            assertTrue(RequestValidator.Validatenumber("1234567890"));
+            assertTrue(RequestValidator.Validatenumber("9884689632"));
             System.out.println("The request Number is valid");
         } catch (InvalidRequestException e) {
             System.out.println(e.getMessage());

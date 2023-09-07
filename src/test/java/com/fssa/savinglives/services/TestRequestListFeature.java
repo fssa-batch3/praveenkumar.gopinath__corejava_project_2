@@ -17,10 +17,10 @@ public class TestRequestListFeature {
 		RequestService requestService = new RequestService();
 
 		try {
-			String bloodGroup = "AB+";
-			List<Request> requests = requestService.getRequestsByBloodGroup(bloodGroup);
+			String bloodGroup = "O+";
+			List<Request> requests = RequestService.getRequestsByBloodGroup(bloodGroup);
 			for(Request request : requests) {
-				System.out.println(request.gettitle() + " | " + request.getdate());
+				System.out.println(request.gettitle() + " | " +request.getdesc()+ " | " + request.getbloodgroup()+ " | " +request.getdate()+ " | " + request.getnumber());
 			}
 		} catch (ServiceException e) {
 			e.printStackTrace();

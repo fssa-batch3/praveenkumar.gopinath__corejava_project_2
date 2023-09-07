@@ -7,10 +7,6 @@ public class User {
 	private String password;
 
 	
-
-	public User() {
-	}
-
 	public User(String email, String password) {
 	}
 
@@ -49,6 +45,7 @@ public class User {
 	public String toString() {
 		return "User [name=" + name + ",email=" + email + ", password=" + password + "]";
 	}
-
+	public User() {
+	}
  
 }

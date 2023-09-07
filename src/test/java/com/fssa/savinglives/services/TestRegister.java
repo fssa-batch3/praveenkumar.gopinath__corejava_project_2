@@ -15,9 +15,9 @@ class TestRegister {
 
 		UserService userservice = new UserService();
 		User user1 = new User();
-		user1.setEmail("ilya460323@gmail.com");
-		user1.setName("Ilya");
-		user1.setPassword("Ilya@1234");
+		user1.setEmail("vishnu460323@gmail.com");
+		user1.setName("Vishnu");
+		user1.setPassword("Vishnu@1234");
 		try {
 			assertTrue(userservice.registerUser(user1));
 		} catch (ServiceException e) {

@@ -23,7 +23,7 @@ class TestUserValidator {
 	@Test
 	void testInvalidUser() {
 		User user1 = new User("000.com", "000", "0");
-	    
+	  
 		try {
 			assertFalse(UserValidator.validateUpdateUser(user1));
 		} catch (InvalidUserException e) {
