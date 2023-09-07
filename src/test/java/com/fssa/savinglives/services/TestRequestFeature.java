@@ -14,7 +14,7 @@ public class TestRequestFeature{
 
 		public static void main(String[] args) throws DAOException {
 			
-			Request request = new Request("i need AB+ blood group", "Thank you for giving blood", "AB+", "2023-08-22", "9884689632");
+			Request request = new Request("i need 	O- blood group", "Thank you for giving blood", "O-", "2023-08-06", "9884689632");
 			RequestService requestService = new RequestService();
 
 			try {
@@ -25,12 +25,12 @@ public class TestRequestFeature{
 			}
 
 		}
-		
+	
 		@Test
 		public void testRequestSuccess() throws DAOException, ServiceException, InvalidUserException {
 
 			RequestService requestService = new RequestService();
-			Request request = new Request("I need AB+ blood group", "Thank you for giving blood", "AB+", "2023-08-22", "9884689632");
+			Request request = new Request("I need O- blood group", "Thank you for giving blood", "O-", "2023-08-06", "9884689632");
 			try {
 				assertTrue(requestService.registerRequest(request));
 			
