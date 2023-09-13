@@ -1,7 +1,5 @@
 com\fssa\savinglives\services\TestUpdateUserFeature.class
 com\fssa\savinglives\validation\TestValidUsername.class
-com\fssa\savinglives\services\TestLogin.class
-com\fssa\savinglives\services\TestRegister.class
 com\fssa\savinglives\validation\TestValidateEmail.class
 com\fssa\savinglives\validation\TestValidatePassword.class
 com\fssa\savinglives\validation\TestUserValidator.class

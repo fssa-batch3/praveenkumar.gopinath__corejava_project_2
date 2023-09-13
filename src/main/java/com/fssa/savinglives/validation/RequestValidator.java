@@ -1,94 +1,84 @@
 package com.fssa.savinglives.validation;
 
-import java.util.List;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.regex.Pattern;
 
-
 import com.fssa.savinglives.model.Request;
-import com.fssa.savinglives.validation.exceptions.InvalidRequestException;
+import com.fssa.savinglives.validation.exceptions.InvalidUserException;
 
 public class RequestValidator {
-
-    public static boolean validationRequest(Request request) throws InvalidRequestException {
-
-        if (request != null
-                && validateGroup(request.getbloodgroup())
-                && validateDate(request.getdate())
-                && Validatenumber(request.getnumber())) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    
-    public static void validateGetAllRequests(List<Request> request) throws InvalidRequestException {
-
-		if (request == null || request.isEmpty())
-			throw new InvalidRequestException("There is no request");
-
+	
+	public static boolean Validation(Request request)throws  InvalidUserException{
+		boolean match = false;
+		if(request != null  && Validategroup(request.getgroup()) && Validatenumber(request.getnumber())) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 
-    // Pattern
-    public static boolean validateGroup(String group) throws InvalidRequestException {
-        boolean isMatch = false;
-        try {
-            String bloodGroupRegex = "^(A|B|AB|O)[+-]?$";
-            isMatch = Pattern.matches(bloodGroupRegex, group);
-            if (isMatch) {
-                System.out.println("The request Blood group is valid");
-            } else {
-                throw new InvalidRequestException("Blood group is not valid");
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+	
 
-        return isMatch;
-    }
+  
 
-    public static boolean validateDate(String date) throws InvalidRequestException {
 
-        boolean isMatch = false;
-        if (date == null) {
-            return false;
-        }
+	//Pattern
+	public static boolean Validategroup(String group) {
+		boolean match = false;
+		
+		String bloodGroupRegex = "^(A|B|AB|O)[+-]?$";
+		match = Pattern.matches(bloodGroupRegex,group);
+		if(match) {
+			System.out.println("Blood group is valid");
+		}else {
+			System.out.println("Blood group is Invalid");
+		}
+		return match;
+		}
+	
 
-        try {
-            String dateRegex = "^(\\d{4})-(\\d{2})-(\\d{2})$";
-            isMatch = Pattern.matches(dateRegex, date);
 
-            if (isMatch) {
-                System.out.println("The request Date is valid");
-            } else {
-                throw new InvalidRequestException("The request date is not valid");
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+	public static boolean Validatedob(Date date) {
+		if (date == null)
+			return false;
 
-        return isMatch;
-    }
+		LocalDate dob = date.toLocalDate();
 
-    public static boolean Validatenumber(String number) throws InvalidRequestException {
-        boolean isMatch = false;
-        if (number == null) {
-            return false;
-        }
+		// Perform your date of birth validation here
+		LocalDate currentDate = LocalDate.now();
+		LocalDate minDob = currentDate.minusYears(120);
+		LocalDate maxDob = currentDate.minusYears(5);
 
-        try {
-            String phoneNumberRegex = "^[0-9]{10}$";
-            isMatch = Pattern.matches(phoneNumberRegex, number);
+		boolean isValidDob = (dob.isAfter(minDob) && dob.isBefore(maxDob));
 
-            if (isMatch) {
-                System.out.println("The request Number is valid");
-            } else {
-                throw new InvalidRequestException("The request Number is not valid");
-            }
-        } catch (InvalidRequestException e) {
-            System.out.println(e.getMessage());
-        }
+		if (isValidDob) {
+			System.out.println("Date is valid");
+		} else {
+			System.out.println("Date is  Invalid");
+		}
 
-        return isMatch;
-    }
+		return isValidDob;
+	}
+
+	
+	
+	
+	
+
+		public static boolean Validatenumber(long l) {
+			boolean match = false;
+			
+			String phoneNumberRegex = "^[0-9]{10}$";
+			match = Pattern.matches(phoneNumberRegex, Long.toString(l));
+			
+			if(match) {
+				System.out.println("PhoneNumber is valid");
+			}else {
+				System.out.println("PhoneNumber is Invalid");
+			}
+			return match;
+			}
+			
+		
 }

@@ -1,89 +1,106 @@
 package com.fssa.savinglives.service;
 
 import java.util.List;
+import java.util.function.BooleanSupplier;
 
 import com.fssa.savinglives.dao.RequestDAO;
 import com.fssa.savinglives.dao.exception.DAOException;
 import com.fssa.savinglives.model.Request;
-import com.fssa.savinglives.service.exception.ServiceException;
 import com.fssa.savinglives.validation.RequestValidator;
-import com.fssa.savinglives.validation.exceptions.InvalidRequestException;
+import com.fssa.savinglives.validation.exceptions.InvalidUserException;
+import com.fssa.savinglives.service.exception.ServiceException;
 
 public class RequestService {
 
-	public boolean registerRequest(Request request) throws ServiceException {
 
-		RequestDAO requestDAO = new RequestDAO();
+
+
+public boolean create(Request request) throws ServiceException, DAOException {
+		
+	RequestDAO requestDAO = new RequestDAO();
+		
 		try {
-			RequestValidator.validationRequest(request);
-			if (requestDAO.createRequest(request)) {
+			RequestValidator.Validation(request);
+			if (requestDAO.createrequest(request)) {
 				System.out.println("Successfully created");
 				return true;
 			} else {
-				System.out.println("Request is not Successfully created");
 				return false;
 			}
-		} catch (DAOException | InvalidRequestException e) {
-			throw new ServiceException(e.getMessage());
-		}
-
-	}
-
-	public static boolean readRequest(Request request) throws ServiceException {
-
-		RequestDAO requestDAO = new RequestDAO();
-
-		try {
-			RequestValidator.validationRequest(request);
-			if (requestDAO.createRequest(request)) {
-				System.out.println("Successfully Reading");
-				return false;
-			} else {
-				System.out.println("Request is not successfully read");
-				return false;
-			}
-		} catch (DAOException | InvalidRequestException e) {
+		} catch (InvalidUserException e) {
 			throw new ServiceException(e);
 		}
+
+	}
+	
+
+
+public List<Request> readrequest() throws ServiceException {
+	
+	RequestDAO requestDAO = new RequestDAO();
+		
+		try {
+		
+			List<Request> req = requestDAO.readrequest();
+			return req;
+			
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+		
+
 	}
 
-	public boolean updateRequest(Request request) throws ServiceException, DAOException {
-
-		RequestDAO requestDAO = new RequestDAO();
-
+public  boolean updaterequest(Request request,String email) throws ServiceException,InvalidUserException, DAOException {
+	
+	RequestDAO requestDAO = new RequestDAO();
+		
 		try {
-			RequestValidator.validationRequest(request);
-			if (requestDAO.updateRequest(request)) {
-				System.out.println("Successfully Reading");
+			RequestValidator.Validation(request);
+			if (requestDAO.updaterequest(request, email)) {
+				System.out.println("Successfully Update");
 				return true;
 			} else {
-				System.out.println("request is not successfully update");
+				System.out.println("not successfully updated");
 				return false;
 			}
-		} catch (DAOException | InvalidRequestException e) {
+		} catch (DAOException|InvalidUserException e) {
+			e.printStackTrace();
 			throw new ServiceException(e);
 		}
 
 	}
 
-	public static List<Request> getRequestsByBloodGroup(String bloodGroup) throws ServiceException {
-		List<Request> requestList = null;
-		RequestDAO requestDAO = new RequestDAO();
+public boolean delete(String email) throws ServiceException, InvalidUserException, DAOException {
 
-		try {
-			List<Request> requestList1 = requestDAO.getRequestsByBloodGroup(bloodGroup);
-			RequestValidator.validateGetAllRequests(requestList1);
-
-			System.out.println("Successfully got the requests.");
-			return requestList1;
-
-		} catch (DAOException e) {
-			e.printStackTrace();
-			throw new ServiceException("Error in data access", e);
-		} catch (InvalidRequestException e) {
-			e.printStackTrace();
-			throw new ServiceException("Invalid request", e);
+	RequestDAO requestDAO = new RequestDAO();
+	try {
+	
+		if (requestDAO.deleterequest(email)) {
+			System.out.println("Successfully Deleted");
+			return true;
+		} else {
+			System.out.println("we can't delete");
+			return false;
 		}
+	
+	}catch(DAOException e) {
+		e.printStackTrace();
+		throw new ServiceException(e);
 	}
+	
+}
 
+public BooleanSupplier loginUser(String string, String string2) {
+
+	return null;
+}
+
+
+
+
+
+
+
+	
 }

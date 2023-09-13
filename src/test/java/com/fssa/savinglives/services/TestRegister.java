@@ -9,22 +9,23 @@ import com.fssa.savinglives.model.*;
 import com.fssa.savinglives.service.*;
 import com.fssa.savinglives.service.exception.ServiceException;
 
-class TestRegister {
+class TestRegisterFeature {
 	@Test
 	 void testRegistrationSuccess() {
 
 		UserService userservice = new UserService();
 		User user1 = new User();
-		user1.setEmail("vishnu460323@gmail.com");
-		user1.setName("Vishnu");
-		user1.setPassword("Vishnu@1234");
+		user1.setEmail("praveenkumar1234@gmail.com");
+		user1.setUsername("Praveen");
+		user1.setPassword("Prav@1234");
 		try {
 			assertTrue(userservice.registerUser(user1));
 		} catch (ServiceException e) {
 			e.printStackTrace();
 			System.out.println(e);
+
 		}
-   
+
 	}
 
 	@Test
@@ -32,9 +33,9 @@ class TestRegister {
 
 		UserService userservice = new UserService();
 		User user1 = new User();
-		user1.setEmail(null);
-		user1.setName(null);
-		user1.setPassword(null);
+		user1.setEmail("abcde12345gmail.com");
+		user1.setUsername("Abcde");
+		user1.setPassword("Abcde@1234");
 		try {
 			assertFalse(userservice.registerUser(user1));
 		} catch (ServiceException e) {
@@ -45,7 +46,7 @@ class TestRegister {
 	}
 
 	@Test
-	 void testUserEmpty() {
+	 void testUserNull() {
 
 		UserService userservice = new UserService();
 		User user1 = null;

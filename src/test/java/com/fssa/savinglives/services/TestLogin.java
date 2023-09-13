@@ -8,21 +8,21 @@ import com.fssa.savinglives.model.*;
 import com.fssa.savinglives.service.*;
 import com.fssa.savinglives.service.exception.ServiceException;
 
-class TestLogin {
+class TestLoginFeature {
 	  
 	@Test
 	 void loginSuccess() {
 		UserService userService = new UserService();
 
 		User user1 = new User();
-		user1.setEmail("'ilya460323@gmail.com'");
-		user1.setPassword("'Ilya@1234'");
+		user1.setEmail("gopikannan2906@gmail.com");
+		user1.setPassword("Wow@2002");
 		
 		try {
 			
 			assertTrue(userService.loginUser(user1));
-			throw new ServiceException("Login successfully. Welcome, " + user1.getEmail() + "!");
 		} catch (ServiceException e) {
+			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
 	}   
@@ -32,11 +32,11 @@ class TestLogin {
 	 void loginFailed() {
 		UserService userService = new UserService();
 		User user1 = new User();
-		user1.setEmail("roshan1234@gmail.com");
-		user1.setPassword("Duke@250");
+		user1.setEmail("abcde1234@gmail.com");
+		user1.setPassword("abcde@1234");
 		try {
 			assertFalse(userService.loginUser(user1));
-			throw new ServiceException("Login Failed. Register again");
+			throw new ServiceException("Login Failed.Kindly Register");
 		} catch (ServiceException e) {
 			System.out.println(e.getMessage());
 		}

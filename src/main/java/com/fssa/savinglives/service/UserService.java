@@ -2,6 +2,8 @@ package com.fssa.savinglives.service;
 
 import java.sql.SQLException;
 
+import java.util.List;
+
 import com.fssa.savinglives.dao.UserDAO;
 import com.fssa.savinglives.dao.exception.DAOException;
 import com.fssa.savinglives.model.User;
@@ -10,23 +12,16 @@ import com.fssa.savinglives.validation.UserValidator;
 import com.fssa.savinglives.validation.exceptions.InvalidUserException;
 
 public class UserService {
-	/**
-	 * Registers a new user.
-	 *
-	 * @param user The User object containing user information.
-	 * @return True if user registration is successful, otherwise false.
-	 * @throws ServiceException If a service-related issue occurs.
-	 */
 	public boolean registerUser(User user) throws ServiceException {
 
-		UserDAO userDAO = new UserDAO(); 
+		UserDAO userDAO = new UserDAO();
 
 		try {
 
 			UserValidator.validateUser(user);
 			if (userDAO.isEmailAlreadyRegistered(user.getEmail())) {
 				throw new DAOException("Email already exists");
-			} 
+			}
 			if (userDAO.createUser(user)) {
 				return true;
 			} else {
@@ -39,37 +34,29 @@ public class UserService {
 		}
 	}
 
-	/**
-	 * Logs in a user.
-	 *
-	 * @param user The User object containing user login details.
-	 * @return True if login is successful, otherwise false.
-	 * @throws ServiceException If a service-related issue occurs.
-	 */
+	
+	
+	
 	public boolean loginUser(User user) throws ServiceException {
 		try {
 
-			UserValidator.validateEmail(user.getEmail());
-			UserValidator.validatePassword(user.getPassword());
+			UserValidator.validLoginCredentials(user);
 
 			UserDAO userDAO = new UserDAO();
 			if (userDAO.loginUser(user) && (userDAO.getUserPasswordFromDb().equals(user.getPassword()))) {
 				return true;
 			}
+			else {
+				
+				throw new ServiceException("Check Your Email And Password that you entered while you registered");
+			}
 		} catch (DAOException | InvalidUserException e) {
 
 			throw new ServiceException(e.getMessage());
 		}
-		return false;
 	}
 
-	/**
-	 * Updates user information.
-	 *
-	 * @param user The User object containing updated user information.
-	 * @return True if user information is successfully updated, otherwise false.
-	 * @throws ServiceException If a service-related issue occurs.
-	 */
+
 	public boolean updateUser(User user) throws ServiceException {
 
 		UserDAO userDAO = new UserDAO();
@@ -90,25 +77,16 @@ public class UserService {
 
 	}
 
-	/**
-	 * Deletes a user.
-	 *
-	 * @param email The email of the user to be deleted.
-	 * @return True if user is successfully deleted, otherwise false.
-	 * @throws ServiceException If a service-related issue occurs.
-	 */
+	
 	public boolean deleteUser(String email) throws ServiceException {
 
 		UserDAO userDAO = new UserDAO();
 
 		try {
-			UserValidator.validateEmail(email);
 			return userDAO.deleteUser(email);
-		} catch (DAOException | InvalidUserException e) {
+		} catch (DAOException  e) {
 			throw new ServiceException(e.getMessage());
 		}
  
 	}
-	
-	
 }

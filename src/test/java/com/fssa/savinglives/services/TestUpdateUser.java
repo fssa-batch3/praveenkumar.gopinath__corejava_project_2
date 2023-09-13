@@ -10,22 +10,22 @@ import com.fssa.savinglives.service.exception.ServiceException;
 class TestUpdateUserFeature {
 
 //	Success test case for update
-	@Test
+	@Test 
 	void testUpdateSuccess() {
 
 		UserService userservice = new UserService();
 
-		User user1 = new User("praveenkumar1234@gmail.com", "Praveenkumar", "Duke@390");
+		User user1 = new User("gopikannan2906@gmail.com", "Praveenkumar", "Prave@1234");
 		try {
 			assertTrue(userservice.updateUser(user1));
 		} catch (ServiceException e) {
-
+			
 			System.out.println(e.getMessage());
 
 		}
 
-	}
-
+	} 
+	
 //	Fail test case for update  
 
 	@Test
@@ -33,11 +33,11 @@ class TestUpdateUserFeature {
 
 		UserService userservice = new UserService();
 
-		User user1 = new User("roshan@1234", "roshan", "rosh@250");
+		User user1 = new User("praveen@1234", "Praveenkumar", "Prave@1234");
 		try {
 			assertFalse(userservice.updateUser(user1));
 		} catch (ServiceException e) {
-
+			
 			System.out.println(e);
 
 		}

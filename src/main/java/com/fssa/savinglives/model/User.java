@@ -1,28 +1,32 @@
 package com.fssa.savinglives.model;
 
+/**
+ * Represents a user in the application.
+ */
 public class User {
 
 	private String email;
-	private String name;
+	private String username;
 	private String password;
 
-	
-	public User(String email, String password) {
+
+	/**
+	 * Constructs a new User instance.
+	 */
+	public User() {
 	}
 
-	public User(String name, String email, String password) {
-	}
-
-	public User(String loggedInEmail) {
-		
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+	/**
+	 * Constructs a new User instance with specified details.
+	 *
+	 * @param email     The email address of the user.
+	 * @param username The userName of the user.
+	 * @param password The password of the user.
+	 */
+	public User(String email, String username, String password) {
+		this.email = email;
+		this.username = username;
+		this.password = password;
 	}
 
 	public String getEmail() {
@@ -33,6 +37,14 @@ public class User {
 		this.email = email;
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 	public String getPassword() {
 		return password;
 	}
@@ -41,11 +53,17 @@ public class User {
 		this.password = password;
 	}
 
+	
+
+	
+
 	@Override
 	public String toString() {
-		return "User [name=" + name + ",email=" + email + ", password=" + password + "]";
+	    return "User{" +
+	            "Name='" + username + '\'' +
+	            ", Email='" + email + '\'' +
+	            ", Password='" + password + '\'' + 
+	            '}';
 	}
-	public User() {
-	}
- 
+
 }
