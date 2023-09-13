@@ -6,9 +6,9 @@ package com.fssa.savinglives.model;
 public class User {
 
 	private String email;
+	private int userid;
 	private String username;
 	private String password;
-
 
 	/**
 	 * Constructs a new User instance.
@@ -19,7 +19,7 @@ public class User {
 	/**
 	 * Constructs a new User instance with specified details.
 	 *
-	 * @param email     The email address of the user.
+	 * @param email    The email address of the user.
 	 * @param username The userName of the user.
 	 * @param password The password of the user.
 	 */
@@ -27,6 +27,15 @@ public class User {
 		this.email = email;
 		this.username = username;
 		this.password = password;
+	}
+
+	public User(String email, String username, String password, int userid) {
+		super();
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.userid = userid; 
+		
 	}
 
 	public String getEmail() {
@@ -53,17 +62,18 @@ public class User {
 		this.password = password;
 	}
 
-	
-
-	
-
 	@Override
 	public String toString() {
-	    return "User{" +
-	            "Name='" + username + '\'' +
-	            ", Email='" + email + '\'' +
-	            ", Password='" + password + '\'' + 
-	            '}';
+		return "User{" + "Name='" + username + '\'' + ", Email='" + email + '\'' + ", Password='" + password + '\''
+				+ '}';
+	}
+
+	public int getUserId() {
+		return userid;
+	}
+
+	public void setUserId(int userid) {
+		this.userid = userid;
 	}
 
 }
