@@ -1,6 +1,6 @@
 package com.fssa.savinglives.validation;
 
-import java.util.List;
+import java.util.List; 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -117,7 +117,7 @@ public class UserValidator {
 	public static void validateGetAllUser(List<User> user) throws InvalidUserException {
 
 		if (user == null || user.isEmpty())
-			throw new InvalidUserException("There is no product");
+			throw new InvalidUserException("There is no request");
 
 	}
 

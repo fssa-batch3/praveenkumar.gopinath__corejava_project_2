@@ -31,6 +31,36 @@ public class UserDAO {
 		}
 	}
 
+	private String userPasswordFromDb;
+
+	public String getUserPasswordFromDb() {
+		return userPasswordFromDb;
+	}
+
+	public void setUserPasswordFromDb(String userPasswordFromDb) {
+		this.userPasswordFromDb = userPasswordFromDb;
+	}
+
+	public boolean loginUser(User user) throws DAOException {
+		String email = user.getEmail();
+
+		String query = "SELECT email, password FROM user WHERE email = ?;";
+		try (PreparedStatement pst = ConnectionUtil.getConnection().prepareStatement(query)) {
+			pst.setString(1, email);
+			try (ResultSet rs = pst.executeQuery()) {
+
+				if (rs.next()) {
+					String passwordfromDb = rs.getString("password");
+					setUserPasswordFromDb(passwordfromDb);
+					return true;
+				}
+			}
+		} catch (SQLException e) {
+			throw new DAOException("Error in login");
+		}
+		return false;
+	}
+
 	public boolean isEmailAlreadyRegistered(String email) throws DAOException {
 		final String query = "SELECT email FROM user WHERE email = ?";
 
@@ -48,7 +78,7 @@ public class UserDAO {
 	}
 
 	public boolean update(User user) throws DAOException {
-		final String SELECTQUERY = "UPDATE user SET  name=?,email=? WHERE user_id=?";
+		final String SELECTQUERY = "UPDATE user SET  name=?, email=? WHERE userid=?";
 		try (Connection connection = ConnectionUtil.getConnection();
 				PreparedStatement stmt = connection.prepareStatement(SELECTQUERY)) {
 
@@ -66,7 +96,7 @@ public class UserDAO {
 	}
 
 	public boolean deleteUser(int userId) throws DAOException {
-		final String SELECTQUERY = "DELETE from user WHERE user_id=?";
+		final String SELECTQUERY = "DELETE from user WHERE userid=?";
 		try (Connection connection = ConnectionUtil.getConnection();
 				PreparedStatement stmt = connection.prepareStatement(SELECTQUERY)) {
 
@@ -80,7 +110,6 @@ public class UserDAO {
 		return false;
 
 	}
-
 
 	public User findUserByEmail(String email) throws DAOException {
 		final String SELECTQUERY = "SELECT * FROM user WHERE email = ?";
@@ -109,16 +138,13 @@ public class UserDAO {
 		return user;
 
 	}
-	
+
 	public List<User> allUser() throws DAOException {
-		// Create an empty list to store user list
 		List<User> user1 = new ArrayList<>();
 		final String SELECTQUERY = "SELECT * FROM user";
-		// Start a try block with a prepared statement for selecting all users
 		try (Connection connection = ConnectionUtil.getConnection();
 				PreparedStatement stmt = connection.prepareStatement(SELECTQUERY);
 				ResultSet rs = stmt.executeQuery()) {
-			// Iterate through the result set and extract user information
 			while (rs.next()) {
 				int userId = rs.getInt("userid");
 				String name = rs.getString("name");
@@ -128,7 +154,6 @@ public class UserDAO {
 				user1.add(new User(email, name, password, userId));
 
 			}
-			// Return the list of user
 			return user1;
 
 		} catch (SQLException e) {

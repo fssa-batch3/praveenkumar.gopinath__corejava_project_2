@@ -1,9 +1,6 @@
 package com.fssa.savinglives.service;
 
-import java.sql.SQLException;
-
 import java.util.List;
-import java.util.function.BooleanSupplier;
 
 import com.fssa.savinglives.dao.UserDAO;
 import com.fssa.savinglives.dao.exception.DAOException;
@@ -36,25 +33,22 @@ public class UserService {
 		}
 	}
 
-	public int loginWithEmail(String email, String password) throws ServiceException {
-		int id = 0;
+	public boolean loginUser(User user) throws ServiceException {
 		try {
-			if (UserValidator.validateEmail(email) && UserValidator.validatePassword(password)) {
 
-				User user = new UserDAO().findUserByEmail(email);
-				if (user.getPassword().equals(password)) {
-					id = user.getUserId();
-				} else {
-					throw new ServiceException("Invalid Password");
-				}
+			UserValidator.validLoginCredentials(user);
+
+			UserDAO userDAO = new UserDAO();
+			if (userDAO.loginUser(user) && (userDAO.getUserPasswordFromDb().equals(user.getPassword()))) {
+				return true;
+			} else {
+
+				throw new ServiceException("Check Your Email And Password that you entered while you registered");
 			}
+		} catch (DAOException | InvalidUserException e) {
 
-		} catch (InvalidUserException | DAOException e) {
-
-			System.err.println(e.getMessage());
 			throw new ServiceException(e.getMessage());
 		}
-		return id;
 	}
 
 	public boolean updateUser(User user) throws ServiceException {
@@ -83,7 +77,6 @@ public class UserService {
 
 	}
 
-
 	public User findingUserByEmail(String email) throws ServiceException {
 		try {
 			// Call the DAO method to retrieve the user by email
@@ -99,6 +92,7 @@ public class UserService {
 			throw new ServiceException("Error dao in service", e);
 		}
 	}
+
 	public static List<User> getAllUser() throws ServiceException {
 
 		UserDAO userDAO = new UserDAO();// Create an instance of ProductDAO

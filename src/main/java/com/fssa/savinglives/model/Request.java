@@ -1,122 +1,112 @@
 package com.fssa.savinglives.model;
 
-
-
 import java.time.LocalDate;
 
 public class Request {
 
-	
-	public String title;
-	public String description;
-	public String group;
-	public LocalDate date;
-	public long number;
-	public String email;
-	private int is_deleted;
-	private int id;
-	
-	
-	public int getId() {
-		return id;
-	}
+	private String name;
+	private String address;
+	private String title;
+	private String description;
+	private String bloodType;
+	private LocalDate reqDate;
+	private long contactNo;
+	private boolean reqVerification;
+	private int reqId;
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public int getIs_deleted() {
-		return is_deleted;
-	}
-
-	public void setIs_deleted(int is_deleted) {
-		this.is_deleted = is_deleted;
-	}
-
-	public Request() {
-		
-	}
-	public Request(String title, String description, String group, LocalDate date, long number, String email) {
+	public Request(String name, String address, String title, String description, String bloodType, LocalDate reqDate,
+			int contactNo, boolean reqVerification) {
+		this.name = name;
+		this.address = address;
 		this.title = title;
 		this.description = description;
-		this.group = group;
-		this.date = date;
-		this.number = number;
-		this.email = email;
-	}
-	
-	public Request(String email) {
-		this.email = email;
-	}
-	
-	
+		this.bloodType = bloodType;
+		this.reqDate = reqDate;
+		this.contactNo = contactNo;
+		this.reqVerification = reqVerification;
+		this.setReqId(reqId);
 
-	public void settitle(String title) {
-		this.title = title;
 	}
 
-	public void setdescription(String description) {
-		this.description = description;
+	public String getName() {
+		return name;
 	}
 
-	public void setgroup(String group) {
-		this.group = group;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public void setdate(LocalDate date) {
-		this.date = date;
+	public String getAddress() {
+		return address;
+
 	}
 
-	public void setnumber(long number) {
-		this.number = number;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
-	public void setemail(String email) {
-		this.email = email;
-	}
-	
-	
-	public String gettitle() {
+	public String getTitle() {
 		return title;
 	}
 
-	public String getdescription() {
-		return description;
-	}
-
-	public String getgroup() {
-		return group;
-	}
-
-	public LocalDate getdate() {
-		return date;
-	}
-
-	public long getnumber() {
-		return number;
-	}
-	
-	public String getemail() {
-		return email;
-	}
-	public Request (String title, String description, String group, Long number) {
-		super();
+	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getDescription() {
+		return description;
+
+	}
+
+	public void setDescription(String description) {
 		this.description = description;
-		this.group = group;
-		this.number = number;
-		
+	}
+
+	public String getBloodType() {
+		return bloodType;
+	}
+
+	public void setBloodType(String bloodType) {
+		this.bloodType = bloodType;
+	}
+
+	public LocalDate getReqDate() {
+		return reqDate;
+	}
+
+	public void setReqDate(LocalDate reqDate) {
+		this.reqDate = reqDate;
+	}
+
+	public long getContactNo() {
+		return contactNo;
+	}
+
+	public void setContactNo(long contactNo) {
+		this.contactNo = contactNo;
+	}
+
+	public boolean getVerification() {
+		return reqVerification;
+	}
+
+	public void setReqVerification(boolean reqVerification) {
+		this.reqVerification = reqVerification;
+	}
+
+	public int getReqId() {
+		return reqId;
+	}
+
+	public void setReqId(int reqId) {
+		this.reqId = reqId;
 	}
 
 	@Override
 	public String toString() {
-		return "Request [title=" + title + ", description=" + description + ", group=" + group + ", date=" + date
-				+ ", number=" + number + ", email=\" + email +],";
+		return "BloodRequest [reqId=" + reqId + ", name=" + name + ", address=" + address + ", title=" + title
+				+ ", description=" + description + ", reqDate=" + reqDate + ", contactNo=" + contactNo
+				+ ", reqVerification=" + reqVerification + "]";
 	}
 
-
-
-	
-	}
-
-	
+}

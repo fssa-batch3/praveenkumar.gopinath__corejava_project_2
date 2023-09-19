@@ -28,6 +28,7 @@ class TestUserValidator {
 			assertFalse(UserValidator.validateUpdateUser(user1));
 		} catch (InvalidUserException e) {
 			e.printStackTrace();
+			System.out.println("Enter your name like this ex:Abcdefgh");
 		}
 	}
 

@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import com.fssa.savinglives.validation.UserValidator;
 import com.fssa.savinglives.validation.exceptions.InvalidUserException;
 
 class TestValidUsername {
@@ -15,7 +14,7 @@ class TestValidUsername {
 			assertTrue(UserValidator.validateName("Praveen"));
 			System.out.println("username is valid");
 		} catch (InvalidUserException e) {
-			System.out.println(e.getMessage());
+			System.out.println(e.getMessage() + " valid username ");
 		}
 	} 
  
@@ -24,9 +23,9 @@ class TestValidUsername {
 		try {
 
 			assertFalse(UserValidator.validateName("46Praveen"));
-
+			System.out.println(" username it should contain number ");
 		} catch (InvalidUserException e) {
-			System.out.println("username should not start with number");
+			System.out.println(e.getMessage() + " username should not start with number ");
 
 		}
 	}
@@ -38,8 +37,7 @@ class TestValidUsername {
 			assertFalse(UserValidator.validateName("#$@prav!"));
 			System.out.println("username should not contains special character");
 		} catch (InvalidUserException e) {
-
-			System.out.println(e.getMessage());
+			System.out.println(e.getMessage() + " valid username ");
 		}
 	}
 
@@ -61,7 +59,7 @@ class TestValidUsername {
 			assertFalse(UserValidator.validateName("Pr"));
 			System.out.println("username should not be too small ");
 		} catch (InvalidUserException e) {
-			System.out.println(e.getMessage());
+			System.out.println(e.getMessage() + " valide username ");
 		} 
 	}
 
@@ -69,10 +67,10 @@ class TestValidUsername {
 	 void testInvalidUsernameTooLong() {
 		try {
 
-			assertFalse(UserValidator.validateName("Praaaaavvvvvveeeeeeeennnnnnnn"));
+			assertFalse(UserValidator.validateName("Praaaaavvvvvveeeeeeeeeeeeennnnnnnnnnnnnn"));
 			System.out.println("username should not be too long ");
 		} catch (InvalidUserException e) {
-			System.out.println(e.getMessage());
+			System.out.println(e.getMessage() + " valid username ");
 		}
 	}
 }

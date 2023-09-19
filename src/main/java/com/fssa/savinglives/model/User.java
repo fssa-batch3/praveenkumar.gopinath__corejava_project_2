@@ -16,26 +16,23 @@ public class User {
 	public User() {
 	}
 
-	/**
-	 * Constructs a new User instance with specified details.
-	 *
-	 * @param email    The email address of the user.
-	 * @param username The userName of the user.
-	 * @param password The password of the user.
-	 */
+	public User(String email, String username, String password,int userid) {
+		this.email = email;
+		this.username = username;
+		this.password = password;
+		this.userid = userid;
+	}
+
 	public User(String email, String username, String password) {
 		this.email = email;
 		this.username = username;
 		this.password = password;
 	}
 
-	public User(String email, String username, String password, int userid) {
-		super();
-		this.username = username;
+	public User(String email, String password) {
+		// TODO Auto-generated constructor stub
 		this.email = email;
 		this.password = password;
-		this.userid = userid; 
-		
 	}
 
 	public String getEmail() {
@@ -65,7 +62,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User{" + "Name='" + username + '\'' + ", Email='" + email + '\'' + ", Password='" + password + '\''
-				+ '}';
+				+ ", Userid=" + userid + '}';
 	}
 
 	public int getUserId() {

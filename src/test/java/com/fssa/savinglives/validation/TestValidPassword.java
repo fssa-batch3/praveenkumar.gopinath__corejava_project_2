@@ -16,6 +16,7 @@ class TestValidatePassword {
 			System.out.println("The password is valid");
 		} catch (InvalidUserException e) {
 			System.out.println(e.getMessage());
+			
 		}
 
 	}
@@ -29,6 +30,7 @@ class TestValidatePassword {
 		} catch (InvalidUserException e) {
 
 			System.out.println(e.getMessage());
+		
 		}
 	}
 
@@ -41,6 +43,7 @@ class TestValidatePassword {
 		} catch (InvalidUserException e) {
 
 			System.out.println(e.getMessage());
+			
 		}
 	}
 
@@ -53,6 +56,7 @@ class TestValidatePassword {
 		} catch (InvalidUserException e) {
 
 			System.out.println(e.getMessage());
+			
 		}
 	}
 
@@ -65,6 +69,7 @@ class TestValidatePassword {
 		} catch (InvalidUserException e) {
 
 			System.out.println(e.getMessage());
+			
 		}
 	}
 
@@ -76,6 +81,7 @@ class TestValidatePassword {
 			System.out.println("The password too short");
 		} catch (InvalidUserException e) {
 			System.out.println(e.getMessage());
+			
 		}
 	}
 
