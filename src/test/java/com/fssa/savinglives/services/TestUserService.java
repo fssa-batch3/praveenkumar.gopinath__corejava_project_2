@@ -16,7 +16,7 @@ import com.fssa.savinglives.service.exception.ServiceException;
 import com.fssa.savinglives.service.*;
 
 /**
- * @author ArunkumarDhanraj
+ * @author Praveenkumar.G
  *
  */
 class TestUserService {
@@ -28,7 +28,7 @@ class TestUserService {
 	@Test
 	void testRegisterSuccess() {
 		UserService service = new UserService();
-		User user = new User("Kumar", System.nanoTime() + "@gmail.com", "PraveeN@2005");
+		User user = new User("Vishnu", "vishnu123@gmail.com", "Vishnu4693@");
 
 		try {
 			assertTrue(service.registerUser(user));
@@ -41,8 +41,7 @@ class TestUserService {
 	@Test
 	void testRegisterFail() {
 		UserService service = new UserService();
-//		given the already registered user's email
-		User user = new User("Arunkumar", "arun19ict@gmail.com", "PraveeN@2005");
+		User user = new User("PraveenKumar", "praveen12asd@gmail.com", "PraveeN@2005");
 
 		try {
 			assertFalse(service.registerUser(user));
@@ -60,8 +59,8 @@ class TestUserService {
 
 		UserService service = new UserService();
 
-		User regUser = new User("kumaresan", "arun29@gmail.com", "Arun@2022");
-		User logUser = new User("arun29@gmail.com", "Arun@2022");
+		User regUser = new User("praveen", "praveen123@gmail.com", "Praveen@2005");
+		User logUser = new User("praveen123@gmail.com", "Praveen@2005");
 
 		try {
 			service.registerUser(regUser);
@@ -78,10 +77,10 @@ class TestUserService {
 
 		UserService service = new UserService();
 
-		User regUser = new User("Kumar", "kumar@gmail.com", "Kumar@2022");
+		User regUser = new User("Praveen", "praveen123@gmail.com", "Praveen@2005");
 
 //		Giving the wrong email id
-		User logUser = new User("arun99@gmail.com", "akumm@2011");
+		User logUser = new User("kumar123@gmail.com", "kumar@123");
 
 		try {
 			service.registerUser(regUser);
@@ -97,7 +96,7 @@ class TestUserService {
 		UserService service = new UserService();
 
 		try {
-			service.deleteUserByemail("arun29@gmail.com");
+			service.deleteUserByemail("praveen123@gmail.com");
 			service.deleteUserByemail("kumar@gmail.com");
 		} catch (ServiceException e) {
 			e.printStackTrace();
@@ -116,7 +115,7 @@ class TestUserService {
 
 		try {
 
-			User user = service.getUser("arun19ict@gmail.com");
+			User user = service.getUser("praveen123@gmail.com");
 
 			assertNotNull(user);
 
@@ -132,7 +131,7 @@ class TestUserService {
 
 		try {
 
-			User user = service.getUser("bharath@gmail.com");
+			User user = service.getUser("praveeen@gmail.com");
 
 			assertNull(user);
 

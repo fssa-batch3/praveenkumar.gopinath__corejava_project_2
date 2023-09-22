@@ -30,7 +30,7 @@ public class UserDAO {
 	 */
 	public boolean createUser(User user) throws DAOException {
 
-		final String QUERY = "INSERT INTO users (name,email,password) VALUES (?,?,?,?)";
+		final String QUERY = "INSERT INTO users (name,email,password) VALUES (?,?,?)";
 		int row = 0;
 		try (Connection connection =  ConnectionUtil.getConnection();
 				PreparedStatement std = connection.prepareStatement(QUERY)) {
