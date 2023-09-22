@@ -1,10 +1,17 @@
 package com.fssa.savinglives.dao;
 
 import java.sql.Connection;
+
+/**
+ * @author ArunkumarDhanraj
+
+ *
+ */
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,62 +21,113 @@ import com.fssa.savinglives.utils.ConnectionUtil;
 
 public class UserDAO {
 
+	/**
+	 * Creating Statement and inserting the user's value
+	 * 
+	 * @param user
+	 * @return boolean
+	 * @throws DAOException
+	 */
 	public boolean createUser(User user) throws DAOException {
 
-		String query = "INSERT INTO user (username, email, password) VALUES (?, ?, ?)";
-		try (Connection connection = ConnectionUtil.getConnection();
-				PreparedStatement pst = connection.prepareStatement(query)) {
-			pst.setString(1, user.getUsername());
-			pst.setString(2, user.getEmail());
-			pst.setString(3, user.getPassword());
+		final String QUERY = "INSERT INTO users (name,email,password) VALUES (?,?,?,?)";
+		int row = 0;
+		try (Connection connection =  ConnectionUtil.getConnection();
+				PreparedStatement std = connection.prepareStatement(QUERY)) {
 
-			int rows = pst.executeUpdate();
+			std.setString(1, user.getName());
+			std.setString(2, user.getEmail());
+			std.setString(3, user.getPassword());
 
-			return (rows > 0);
+			row = std.executeUpdate();
+			return row > 0;
+
 		} catch (SQLException e) {
-			throw new DAOException("Error while registering the user", e);
+			throw new DAOException("Error in inserting the user's value", e);
 		}
+
 	}
 
-	private String userPasswordFromDb;
+	/**
+	 * Getting the register user's details
+	 * 
+	 * @return List<User>
+	 * @throws DAOException
+	 */
+	public List<User> regiteredUsersList() throws DAOException {
 
-	public String getUserPasswordFromDb() {
-		return userPasswordFromDb;
-	}
+		ArrayList<User> users = new ArrayList<>();
+		final String SELECTQUERY = "Select * from users";
+		try (Connection connection =  ConnectionUtil.getConnection();
+				Statement std = connection.createStatement();
+				ResultSet rs = std.executeQuery(SELECTQUERY)) {
 
-	public void setUserPasswordFromDb(String userPasswordFromDb) {
-		this.userPasswordFromDb = userPasswordFromDb;
-	}
+			while (rs.next()) {
 
-	public boolean loginUser(User user) throws DAOException {
-		String email = user.getEmail();
+				String name = rs.getString("name");
+				String email = rs.getString("email");
+				String password = rs.getString("password");
 
-		String query = "SELECT email, password FROM user WHERE email = ?;";
-		try (PreparedStatement pst = ConnectionUtil.getConnection().prepareStatement(query)) {
-			pst.setString(1, email);
-			try (ResultSet rs = pst.executeQuery()) {
+				User user = new User();
+				user.setName(name);
+				user.setEmail(email);
+				user.setPassword(password);
 
-				if (rs.next()) {
-					String passwordfromDb = rs.getString("password");
-					setUserPasswordFromDb(passwordfromDb);
-					return true;
-				}
+				users.add(user);
 			}
+
 		} catch (SQLException e) {
-			throw new DAOException("Error in login");
+			throw new DAOException("Error in resultSet", e);
 		}
-		return false;
+
+		return users;
+
 	}
 
-	public boolean isEmailAlreadyRegistered(String email) throws DAOException {
-		final String query = "SELECT email FROM user WHERE email = ?";
+	/**
+	 * Delete the user
+	 * 
+	 * @param email
+	 * @return boolean
+	 * @throws DAOException
+	 */
+	public boolean deleteUser(String email) throws DAOException {
 
-		try (Connection connection = ConnectionUtil.getConnection();
-				PreparedStatement pst = connection.prepareStatement(query)) {
+		final String DELETEQUERY = "DELETE FROM users where email=?";
 
-			pst.setString(1, email);
+		int row = 0;
 
-			try (ResultSet rs = pst.executeQuery()) {
+		try (Connection connection =  ConnectionUtil.getConnection();
+				PreparedStatement std = connection.prepareStatement(DELETEQUERY)) {
+
+			std.setString(1, email);
+
+			row = std.executeUpdate();
+
+		} catch (SQLException e) {
+			throw new DAOException("Error in deleting the user", e);
+		}
+
+		return row > 0;
+
+	}
+
+	/**
+	 * Getting the user's details by email id
+	 * 
+	 * @param email
+	 * @return boolean
+	 * @throws DAOException
+	 */
+	public boolean selectByEmail(String email) throws DAOException {
+		final String SELECTQUERY = "SELECT email FROM users WHERE email = ?";
+
+		try (Connection connection =  ConnectionUtil.getConnection();
+				PreparedStatement pstmt = connection.prepareStatement(SELECTQUERY)) {
+
+			pstmt.setString(1, email);
+
+			try (ResultSet rs = pstmt.executeQuery()) {
 				return rs.next(); // Return true if the email exists
 			}
 		} catch (SQLException e) {
@@ -77,88 +135,70 @@ public class UserDAO {
 		}
 	}
 
-	public boolean update(User user) throws DAOException {
-		final String SELECTQUERY = "UPDATE user SET  name=?, email=? WHERE userid=?";
-		try (Connection connection = ConnectionUtil.getConnection();
-				PreparedStatement stmt = connection.prepareStatement(SELECTQUERY)) {
+	/**
+	 * Getting the email and password for log in
+	 * 
+	 * @param user
+	 * @return boolean
+	 * @throws DAOException
+	 */
+	public boolean selectForLogin(User user) throws DAOException {
 
-			stmt.setString(1, user.getUsername());
-			stmt.setString(3, user.getEmail());
-			stmt.setInt(4, user.getUserId());
+		final String SELECTQUERY = "SELECT email, password FROM users WHERE email = ? AND password = ?";
 
-			int row = stmt.executeUpdate();
+		try (Connection connection =  ConnectionUtil.getConnection();
+				PreparedStatement pstmt = connection.prepareStatement(SELECTQUERY)) {
 
-			return row > 0;
+			pstmt.setString(1, user.getEmail());
+			pstmt.setString(2, user.getPassword());
 
-		} catch (SQLException e) {
-			throw new DAOException("Error in to update User", e);
-		}
-	}
-
-	public boolean deleteUser(int userId) throws DAOException {
-		final String SELECTQUERY = "DELETE from user WHERE userid=?";
-		try (Connection connection = ConnectionUtil.getConnection();
-				PreparedStatement stmt = connection.prepareStatement(SELECTQUERY)) {
-
-			stmt.setInt(1, userId);
-
-			stmt.executeUpdate();
+			try (ResultSet rs = pstmt.executeQuery()) {
+				return rs.next(); // Return true if the user email and password exists
+			}
 
 		} catch (SQLException e) {
-			throw new DAOException("Error in to delete user", e);
+			throw new DAOException("Error in loggin in", e);
 		}
-		return false;
 
 	}
 
-	public User findUserByEmail(String email) throws DAOException {
-		final String SELECTQUERY = "SELECT * FROM user WHERE email = ?";
+	/**
+	 * Getting the user by email
+	 * 
+	 * @param email
+	 * @return User
+	 * @throws DAOException
+	 */
 
-		User user = new User();
+	public User getUserByEmail(String email) throws DAOException {
 
-		try (Connection connection = ConnectionUtil.getConnection();
+		final String SELECTQUERY = "SELECT * FROM users WHERE email = ?";
+
+		try (Connection connection =  ConnectionUtil.getConnection();
 				PreparedStatement pstmt = connection.prepareStatement(SELECTQUERY)) {
 
 			pstmt.setString(1, email);
 
 			try (ResultSet rs = pstmt.executeQuery()) {
+
 				if (rs.next()) {
 
-					user.setEmail(rs.getString("email"));
-					user.setUserId(rs.getInt("userid"));
-					user.setPassword(rs.getString("password"));
-					user.setUsername(rs.getString("name"));
+					int id = rs.getInt("id");
+					String name = rs.getString("name");
+					String loggedEmail = rs.getString("email");
+					String password = rs.getString("password");
+
+					return new User(id, name, loggedEmail, password);
 
 				}
+
 			}
 
 		} catch (SQLException e) {
-			throw new DAOException("error in dao", e);
+			throw new DAOException("Cannot get user's details", e);
 		}
-		return user;
+		return null;
 
-	}
-
-	public List<User> allUser() throws DAOException {
-		List<User> user1 = new ArrayList<>();
-		final String SELECTQUERY = "SELECT * FROM user";
-		try (Connection connection = ConnectionUtil.getConnection();
-				PreparedStatement stmt = connection.prepareStatement(SELECTQUERY);
-				ResultSet rs = stmt.executeQuery()) {
-			while (rs.next()) {
-				int userId = rs.getInt("userid");
-				String name = rs.getString("name");
-				String email = rs.getString("email");
-				String password = rs.getString("password");
-
-				user1.add(new User(email, name, password, userId));
-
-			}
-			return user1;
-
-		} catch (SQLException e) {
-			throw new DAOException("Error in List user", e);
-		}
 	}
 
 }

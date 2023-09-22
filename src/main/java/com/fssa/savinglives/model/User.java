@@ -1,38 +1,79 @@
 package com.fssa.savinglives.model;
 
-/**
- * Represents a user in the application.
- */
 public class User {
 
+
+	/**
+	 * Attributes for the User
+	 */
+	private int id;
+	private String name;
 	private String email;
-	private int userid;
-	private String username;
 	private String password;
 
 	/**
-	 * Constructs a new User instance.
+	 * constructor for registration
+	 * 
+	 * @param name
+	 * @param email
+	 * @param password
+	 */
+	public User(String name, String email, String password) {
+		this.name = name;
+		this.email = email;
+		this.password = password;
+	}
+	/**
+	 * constructor for login
+	 * 
+	 * @param email
+	 * @param password
+	 */
+	public User(String email, String password) {
+		this.email = email;
+		this.password = password;
+	}
+
+	/**
+	 * Constructor after logged in
+	 * 
+	 * @param id
+	 * @param name
+	 * @param email
+	 * @param password
+	 */
+	public User(int id, String name, String email, String password) {
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.password = password;
+	}
+
+	/**
+	 * default constructor
 	 */
 	public User() {
+
 	}
 
-	public User(String email, String username, String password,int userid) {
-		this.email = email;
-		this.username = username;
-		this.password = password;
-		this.userid = userid;
+	/**
+	 * Getter and setter for the attributes
+	 * 
+	 */
+	public int getId() {
+		return id;
 	}
 
-	public User(String email, String username, String password) {
-		this.email = email;
-		this.username = username;
-		this.password = password;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public User(String email, String password) {
-		// TODO Auto-generated constructor stub
-		this.email = email;
-		this.password = password;
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getEmail() {
@@ -43,14 +84,6 @@ public class User {
 		this.email = email;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -59,18 +92,16 @@ public class User {
 		this.password = password;
 	}
 
+
+
+	/**
+	 * toString method for the user
+	 * 
+	 * @return String
+	 */
 	@Override
 	public String toString() {
-		return "User{" + "Name='" + username + '\'' + ", Email='" + email + '\'' + ", Password='" + password + '\''
-				+ ", Userid=" + userid + '}';
-	}
-
-	public int getUserId() {
-		return userid;
-	}
-
-	public void setUserId(int userid) {
-		this.userid = userid;
+		return "User [ name = " + name + ", email = " + email + ", password = " + password + " ]";
 	}
 
 }

@@ -2,30 +2,42 @@ package com.fssa.savinglives.model;
 
 import java.time.LocalDate;
 
-public class Request {
+import com.fssa.savinglives.enums.*;
+
+public class BloodRequest {
 
 	private String name;
 	private String address;
 	private String title;
 	private String description;
-	private String bloodType;
+	private BloodGroup bloodtype;
 	private LocalDate reqDate;
-	private long contactNo;
+	private String contactNo;
 	private boolean reqVerification;
 	private int reqId;
 
-	public Request(String name, String address, String title, String description, String bloodType, LocalDate reqDate,
-			int contactNo, boolean reqVerification) {
+	public BloodRequest(String name, String address, String title, String description, BloodGroup bloodtype,
+			LocalDate reqDate, String contactNo, boolean reqVerification) {
 		this.name = name;
 		this.address = address;
 		this.title = title;
 		this.description = description;
-		this.bloodType = bloodType;
+		this.bloodtype = bloodtype;
 		this.reqDate = reqDate;
 		this.contactNo = contactNo;
 		this.reqVerification = reqVerification;
 		this.setReqId(reqId);
 
+	}
+
+	public BloodRequest() {
+		// default constraint for validateBloodGroupType from BloodReqValidator.
+	}
+
+	// Default for testing the blood request service success..
+	public BloodRequest(String name, String address, String title, String description, BloodGroup bloodType, String contactNo,
+			LocalDate parse, boolean reqVerification) {
+		return;
 	}
 
 	public String getName() {
@@ -62,31 +74,32 @@ public class Request {
 		this.description = description;
 	}
 
-	public String getBloodType() {
-		return bloodType;
+	public BloodGroup getBloodType() {
+		return bloodtype;
 	}
 
-	public void setBloodType(String bloodType) {
-		this.bloodType = bloodType;
+	public void setBloodType(BloodGroup bloodtype) {
+		this.bloodtype = bloodtype;
 	}
 
 	public LocalDate getReqDate() {
 		return reqDate;
 	}
-
+	
 	public void setReqDate(LocalDate reqDate) {
 		this.reqDate = reqDate;
 	}
 
-	public long getContactNo() {
+	public String getContactNo() {
 		return contactNo;
 	}
-
-	public void setContactNo(long contactNo) {
+	
+	public void setContactNo(String contactNo) {
 		this.contactNo = contactNo;
 	}
 
-	public boolean getVerification() {
+	
+	public boolean getReqVerification() {
 		return reqVerification;
 	}
 
@@ -105,8 +118,8 @@ public class Request {
 	@Override
 	public String toString() {
 		return "BloodRequest [reqId=" + reqId + ", name=" + name + ", address=" + address + ", title=" + title
-				+ ", description=" + description + ", reqDate=" + reqDate + ", contactNo=" + contactNo
-				+ ", reqVerification=" + reqVerification + "]";
+				+ ", description=" + description + ",bloodtype=" + bloodtype + ", reqDate=" + reqDate + ", contactNo="
+				+ contactNo + ", reqVerification=" + reqVerification + "]";
 	}
 
 }

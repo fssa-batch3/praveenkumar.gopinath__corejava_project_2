@@ -1,123 +1,140 @@
 package com.fssa.savinglives.validation;
 
-import java.util.List; 
+import java.util.List;
+
+/**
+ * @author Praveenkumar.G
+ *
+ */
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.fssa.savinglives.dao.UserDAO;
+import com.fssa.savinglives.dao.exception.DAOException;
 import com.fssa.savinglives.model.User;
 import com.fssa.savinglives.validation.exceptions.InvalidUserException;
 
 public class UserValidator {
 
-	public static boolean validateUserId(int id) throws InvalidUserException {
-		if (id > 0)
+	/**
+	 * Validating all the attributes
+	 * 
+	 * @param user
+	 * @return boolean
+	 * @throws InvalidUserException
+	 */
+	public boolean validateUser(User user) throws InvalidUserException {
+
+		return validName(user.getName()) && validPassword(user.getPassword())
+				&& validEmail(user.getEmail()) && isEmailExists(user.getEmail());
+
+	}
+
+	/**
+	 * validating username
+	 * 
+	 * @param name
+	 * @return boolean
+	 * @throws InvalidUserException
+	 */
+	public boolean validName(String name) throws InvalidUserException {
+
+		String regex = "^[a-zA-Z]{3,}$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(name);
+
+		if (matcher.matches() && name != null)
+			return true;
+
+		throw new InvalidUserException("Invalid Username: Username Should be greater than 3 letters and without special characters");
+
+	}
+
+	
+	/**
+	 * validating password
+	 * 
+	 * @param password
+	 * @return
+	 * @throws InvalidUserException
+	 */
+	public boolean validPassword(String password) throws InvalidUserException {
+
+		String regex = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(password);
+
+		if (matcher.matches() && password != null)
 			return true;
 		else
-			throw new InvalidUserException("Invalid User Id");
-	}
-
-	public static boolean validateUser(User user) throws InvalidUserException {
-
-		if (user == null) {
-			throw new InvalidUserException("User details cannot be null");
-		}
-
-		if (!validateName(user.getUsername()) || !validateEmail(user.getEmail())
-				|| !validatePassword(user.getPassword())) {
-			throw new InvalidUserException("User details not valid");
-		}
-		return true;
-
-	}
-
-	public static boolean validateUpdateUser(User user) throws InvalidUserException {
-		if (user == null) {
-			throw new InvalidUserException("User details cannot be null");
-		}
-
-		if (!validateName(user.getUsername()) || !validateEmail(user.getEmail())
-				|| !validatePassword(user.getPassword())) {
-			throw new InvalidUserException("User details not valid");
-		}
-		return true;
-
-	}
-
-	public static boolean validateEmail(String email) throws InvalidUserException {
-		boolean isMatch = false;
-
-		if (email == null || email.trim().isEmpty()) {
-			return false;
-		}
-
-		String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
-		isMatch = Pattern.matches(regex, email);
-		if (isMatch) {
-			return true;
-		} else {
 			throw new InvalidUserException(
-					"User email is invalid: Enter your email like this ex:abcdefgh123@gmail.com");
-
-		}
+					"Password must contain atleast 1 CAPITAL LETTER, small letter, special characters and numbers");
 
 	}
 
-	public static boolean validateName(String name) throws InvalidUserException {
-		boolean match = false;
+	/**
+	 * validating email
+	 * 
+	 * @param email
+	 * @return boolean
+	 * @throws InvalidUserException
+	 */
+	public boolean validEmail(String email) throws InvalidUserException {
 
-		if (name == null || name.trim().isEmpty()) {
-			return false;
-		}
+		String regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(email);
 
-		String regex = "^[A-Za-z]\\w{2,29}$";
-		Pattern p = Pattern.compile(regex);
-		Matcher m = p.matcher(name);
-		match = m.matches();
-		if (match) {
+		if (matcher.matches() && email != null)
 			return true;
-		} else {
-			throw new InvalidUserException("User name is invalid: Enter your name like this ex:Abcdefgh");
 
-		}
+		throw new InvalidUserException("Invalid email");
 
 	}
 
-	public static boolean validatePassword(String password) throws InvalidUserException {
-		boolean match = false;
+	/**
+	 * Checking whether the email already exists
+	 * 
+	 * @param email
+	 * @return boolean
+	 * @throws InvalidUserException
+	 */
+	public boolean isEmailExists(String email) throws InvalidUserException {
+		UserDAO userDAO = new UserDAO();
 
-		if (password == null || password.trim().isEmpty()) {
-			return false;
-		}
+		try {
+			if (userDAO.selectByEmail(email))
+				throw new InvalidUserException("Email is already registered");
 
-		String patternString = "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=])(?=.*[^\\s]).{8,}$";
-		match = Pattern.matches(patternString, password);
-
-		if (match) {
 			return true;
-		} else {
-			throw new InvalidUserException("User password is invalid: Enter your password like this ex:Abc@1234");
-
+		} catch (DAOException e) {
+			throw new InvalidUserException("Error in selecting by email");
 		}
 
 	}
 
-	public static boolean validLoginCredentials(User user) throws InvalidUserException {
+	/**
+	 * Validating the user's list
+	 * @param userList
+	 * @throws InvalidUserException
+	 */
+	public void validUsersList(List<User> userList) throws InvalidUserException {
 
-		if (!validateEmail(user.getEmail())) {
-			throw new InvalidUserException(
-					"User email is invalid: Enter your email like this ex: abcdefgh123@gmail.com");
-		}
-		if (!validatePassword(user.getPassword())) {
-			throw new InvalidUserException("User password is invalid: Enter your password like this ex:Abc@123");
-		}
-		return true;
+		if (userList == null || userList.isEmpty())
+			throw new InvalidUserException("Noone registered");
 
 	}
 
-	public static void validateGetAllUser(List<User> user) throws InvalidUserException {
+	/**
+	 * validating the logged user's details
+	 * @param user
+	 * @throws InvalidUserException
+	 */
+	public void validLoggedUser(User user) throws InvalidUserException {
 
-		if (user == null || user.isEmpty())
-			throw new InvalidUserException("There is no request");
+		if (user == null)
+			throw new InvalidUserException("Cannot get user's details");
 
 	}
 
