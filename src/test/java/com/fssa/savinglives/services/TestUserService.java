@@ -28,10 +28,11 @@ class TestUserService {
 	@Test
 	void testRegisterSuccess() {
 		UserService service = new UserService();
-		User user = new User("Vishnu", "vishnu123@gmail.com", "Vishnu4693@");
+		User user = new User("Thanush", "Thanush284@gmail.com", "ghjK9985&");
 
 		try {
 			assertTrue(service.registerUser(user));
+			System.out.println("Registered successfully");
 		} catch (ServiceException e) {
 			e.printStackTrace();
 			fail();
